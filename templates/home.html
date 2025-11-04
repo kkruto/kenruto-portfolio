@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ken Ruto - Product Manager & Social Entrepreneur{% endblock %}
+
+{% block content %}
+<div class="page-transition">
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-5xl text-center">
+            <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight text-gray-900 mb-8">
+                KEN RUTO
+            </h1>
+            <p class="text-xl sm:text-2xl text-gray-600 mb-12">
+                Building technology • Creating stories • Shipping experiments • Writing ideas
+            </p>
+            
+            <div class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-700 space-y-4 fade-on-scroll">
+                <p>
+                    Hi, I'm Ken. I wear many hats, and each one tells a different story.
+                </p>
+                <p>
+                    Some days I'm building enterprise software for water utilities in Kenya. 
+                    Other days I'm writing film scripts or designing games. Most days I'm 
+                    shipping small bets—SaaS experiments that might work. And whenever I can, 
+                    I'm writing long essays about ideas that matter.
+                </p>
+                <p class="font-medium text-brand text-xl">
+                    Pick the version of me you're curious about ↓
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portal Cards -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-6xl">
+            <!-- First Row: About & TLW -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
+                <!-- About Card -->
+                <a href="{% url 'about' %}" class="portal-card portal-card-about fade-on-scroll group block">
+                    <div class="text-center">
+                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            💼
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+                            ABOUT
+                        </h2>
+                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
+                            Professional Ken
+                        </p>
+                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
+                            Product manager and entrepreneur building social impact technology in East Africa. 
+                            Leading AccessWASH, mentoring students, and preparing for my next venture.
+                        </p>
+                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
+                            → Enter
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- TLW Card -->
+                <a href="{% url 'tlw' %}" class="portal-card portal-card-tlw fade-on-scroll group block">
+                    <div class="text-center">
+                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            🎬
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+                            TLW STUDIO
+                        </h2>
+                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
+                            Creator Ken
+                        </p>
+                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
+                            Stories through film, games, and interactive experiences exploring African 
+                            narratives, speculative futures, and moral questions.
+                        </p>
+                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
+                            → Enter
+                        </span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Second Row: Small Bets & Kiota -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
+                <!-- Small Bets Card -->
+                <a href="{% url 'small_bets' %}" class="portal-card portal-card-bets fade-on-scroll group block">
+                    <div class="text-center">
+                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            🚀
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+                            SMALL BETS
+                        </h2>
+                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
+                            Builder Ken
+                        </p>
+                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
+                            SaaS experiments and side projects shipping fast and learning faster. 
+                            Building tools for the social impact sector.
+                        </p>
+                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
+                            → Enter
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Kiota Card -->
+                <a href="{% url 'kiota' %}" class="portal-card portal-card-kiota fade-on-scroll group block">
+                    <div class="text-center">
+                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            💡
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+                            KIOTA
+                        </h2>
+                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
+                            Thinker Ken
+                        </p>
+                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
+                            Long-form essays on culture, tech, and ideas worth debating. Exploring 
+                            Africa's future through rigorous thinking.
+                        </p>
+                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
+                            → Enter
+                        </span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Third Row: Gallery (Centered) -->
+            <div class="flex justify-center">
+                <a href="{% url 'gallery' %}" class="portal-card portal-card-gallery fade-on-scroll group block max-w-md w-full">
+                    <div class="text-center">
+                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                            📸
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
+                            GALLERY
+                        </h2>
+                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
+                            Explorer Ken
+                        </p>
+                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
+                            Photos from travels across East Africa and North America. Moments, 
+                            perspectives, and places that shaped my thinking.
+                        </p>
+                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
+                            → Enter
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    {% include 'components/newsletter.html' %}
+</div>
+{% endblock %}

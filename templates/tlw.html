@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TLW Studio - Ken Ruto{% endblock %}
+
+{% block body_class %}bg-tlw-bg text-tlw-text{% endblock %}
+
+{% block content %}
+<div class="page-transition min-h-screen">
+    <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-tlw-text mb-6 animate-fade-in">
+                THE LION WRITES STUDIO
+            </h1>
+            <p class="text-xl sm:text-2xl text-tlw-text/80 mb-16">
+                Stories • Games • Films
+            </p>
+            
+            <!-- Cinematic Image Placeholder -->
+            <div class="relative w-full h-96 bg-tlw-primary/20 rounded-2xl overflow-hidden mb-16 flex items-center justify-center border-2 border-tlw-accent/30">
+                <div class="text-center p-8">
+                    <svg class="w-32 h-32 mx-auto mb-4 text-tlw-accent/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    <p class="text-tlw-text/60 text-lg">Cinematic placeholder</p>
+                </div>
+            </div>
+            
+            <div class="max-w-2xl mx-auto space-y-6 text-lg leading-relaxed text-tlw-text/90 mb-12">
+                <h2 class="text-3xl font-bold text-tlw-accent mb-6">COMING SOON</h2>
+                <p>
+                    This is where I tell stories that don't fit anywhere else.
+                </p>
+                <p>
+                    Some are films exploring what it means to be African in a tech-obsessed world. 
+                    Some are games that let you experience moral dilemmas with real consequences. 
+                    Some are just experiments—seeing what happens when you combine narrative and code.
+                </p>
+                <p>
+                    Not everything here is finished. Some things might never be. 
+                    But everything here is honest.
+                </p>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="{% url 'about' %}" class="bg-tlw-accent hover:bg-tlw-accent/90 text-white px-8 py-3 rounded-full font-semibold transition-colors">
+                    → Learn about my other work
+                </a>
+                <a href="{% url 'kiota' %}" class="border-2 border-tlw-accent text-tlw-accent hover:bg-tlw-accent hover:text-white px-8 py-3 rounded-full font-semibold transition-colors">
+                    → Read my essays
+                </a>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class="bg-tlw-primary/30 rounded-2xl p-8 border-2 border-tlw-accent/20">
+                <h3 class="text-2xl font-bold text-tlw-text mb-4">Get Notified</h3>
+                <p class="text-tlw-text/80 mb-6">
+                    Want to know when projects launch? Join the mailing list.
+                </p>
+                <form method="POST" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    {% csrf_token %}
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Enter your email" 
+                        required
+                        class="flex-1 px-6 py-3 rounded-full bg-white/10 border-2 border-tlw-accent/30 text-tlw-text placeholder-tlw-text/50 focus:border-tlw-accent focus:outline-none focus:ring-4 focus:ring-tlw-accent/20"
+                    >
+                    <button type="submit" class="bg-tlw-accent hover:bg-tlw-accent/90 text-white px-8 py-3 rounded-full font-semibold transition-colors whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

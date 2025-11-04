@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Kiota - Ken Ruto{% endblock %}
+
+{% block body_class %}bg-kiota-bg text-kiota-text{% endblock %}
+
+{% block content %}
+<div class="page-transition min-h-screen">
+    <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold text-kiota-text mb-6 animate-fade-in">
+                    KIOTA
+                </h1>
+                <p class="text-xl sm:text-2xl text-kiota-text/80 mb-8">
+                    Essays • Visualizations • Ideas
+                </p>
+                <p class="text-lg text-kiota-secondary italic">
+                    Long-form thinking on culture, tech, and Africa
+                </p>
+            </div>
+            
+            <!-- Minimalist Illustration Placeholder -->
+            <div class="relative w-full h-64 bg-gradient-to-br from-kiota-secondary/10 to-kiota-primary/10 rounded-2xl overflow-hidden mb-16 flex items-center justify-center border border-kiota-primary/20">
+                <div class="text-center p-8">
+                    <svg class="w-24 h-24 mx-auto mb-4 text-kiota-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <p class="text-kiota-text/60 text-lg font-serif">Essays coming soon</p>
+                </div>
+            </div>
+            
+            <div class="max-w-2xl mx-auto space-y-6 text-lg leading-relaxed text-kiota-text mb-12">
+                <h2 class="text-3xl font-serif font-bold text-kiota-primary mb-6 text-center">LAUNCHING SOON</h2>
+                <p>
+                    This is where I think out loud.
+                </p>
+                <p>
+                    I'm preparing a series of essays exploring technology, effective altruism, and building in Africa. 
+                    Some will be polished arguments with research and citations. Others will be messy explorations 
+                    of ideas I'm still figuring out.
+                </p>
+                
+                <div class="bg-kiota-primary/5 rounded-lg p-6 my-8 border-l-4 border-kiota-secondary">
+                    <h3 class="font-semibold text-kiota-primary mb-4">Topics I'll be writing about:</h3>
+                    <ul class="space-y-2 text-kiota-text/80">
+                        <li class="flex items-start">
+                            <span class="text-kiota-secondary mr-2">•</span>
+                            <span><strong>Genesis:</strong> Betting on infrastructure, AI, and arts for Africa's next decade</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-kiota-secondary mr-2">•</span>
+                            <span><strong>The Water Paradox:</strong> Why the most important technology gets the least attention</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-kiota-secondary mr-2">•</span>
+                            <span><strong>Cargo Cult of Silicon Valley:</strong> Copying aesthetics without understanding conditions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-kiota-secondary mr-2">•</span>
+                            <span>Effective altruism in non-Western contexts</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-kiota-secondary mr-2">•</span>
+                            <span>Building technology that respects African realities</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <p class="text-center text-kiota-secondary font-semibold">
+                    First essays coming December 2025
+                </p>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="{% url 'about' %}" class="bg-kiota-primary hover:bg-kiota-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
+                    → Learn about my work
+                </a>
+                <a href="{% url 'small_bets' %}" class="border-2 border-kiota-secondary text-kiota-secondary hover:bg-kiota-secondary hover:text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
+                    → See what I'm building
+                </a>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class="bg-white rounded-2xl p-8 border-2 border-kiota-primary/20 text-center shadow-sm">
+                <h3 class="text-2xl font-serif font-bold text-kiota-text mb-4">Get Notified When Essays Launch</h3>
+                <p class="text-kiota-text/80 mb-6">
+                    Join the mailing list to be the first to read new essays
+                </p>
+                <form method="POST" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    {% csrf_token %}
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="your@email.com" 
+                        required
+                        class="flex-1 px-6 py-3 rounded-full bg-white border-2 border-kiota-primary/30 text-kiota-text placeholder-kiota-text/50 focus:border-kiota-primary focus:outline-none focus:ring-4 focus:ring-kiota-primary/20"
+                    >
+                    <button type="submit" class="bg-kiota-secondary hover:bg-kiota-secondary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-sm text-kiota-text/60 mt-4">
+                    No spam. Only essays. Unsubscribe anytime.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

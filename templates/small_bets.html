@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Small Bets - Ken Ruto{% endblock %}
+
+{% block body_class %}bg-bets-bg text-bets-text{% endblock %}
+
+{% block content %}
+<div class="page-transition min-h-screen">
+    <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold font-mono text-bets-text mb-6 animate-fade-in">
+                    SMALL BETS
+                </h1>
+                <p class="text-xl sm:text-2xl text-bets-text/80 mb-8">
+                    Experiments • Side Projects • Things I Ship
+                </p>
+                <p class="text-lg text-bets-secondary italic">
+                    "Most things fail. Ship anyway."
+                </p>
+            </div>
+            
+            <!-- Terminal-style Output -->
+            <div class="bg-black/50 rounded-2xl p-8 mb-16 border-2 border-bets-primary/30 font-mono text-sm">
+                <div class="flex items-center gap-2 mb-4 text-bets-text/60">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <span class="ml-2">kenruto@portfolio:~/projects$</span>
+                </div>
+                <div class="space-y-2 text-bets-text">
+                    <p class="text-bets-secondary">$ ./ship_experiments.sh</p>
+                    <p class="text-bets-text/80">> Loading projects...</p>
+                    <p class="text-bets-text/80">> Checking status...</p>
+                    <p class="text-bets-accent">> <span class="animate-pulse">█</span></p>
+                </div>
+            </div>
+            
+            <div class="max-w-2xl mx-auto space-y-6 text-lg leading-relaxed text-bets-text/90 text-center mb-12">
+                <h2 class="text-3xl font-bold text-bets-accent mb-6">UNDER CONSTRUCTION</h2>
+                <p>
+                    I ship things. Some work. Most don't. All teach me something.
+                </p>
+                <p>
+                    This is my lab—side projects, SaaS experiments, tools I build to scratch my own itch. 
+                    If even one other person finds them useful, that's a win.
+                </p>
+                <p>
+                    I'm currently documenting my experiments. Check back soon to see what I'm building.
+                </p>
+                <p class="text-bets-secondary font-semibold">
+                    Philosophy: Ship fast, learn faster, repeat.
+                </p>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="{% url 'about' %}" class="bg-bets-primary hover:bg-bets-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
+                    → See my professional work
+                </a>
+                <a href="{% url 'kiota' %}" class="border-2 border-bets-secondary text-bets-secondary hover:bg-bets-secondary hover:text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
+                    → Read about building
+                </a>
+            </div>
+            
+            <!-- Newsletter -->
+            <div class="bg-black/30 rounded-2xl p-8 border-2 border-bets-primary/30 text-center">
+                <h3 class="text-2xl font-bold text-bets-text mb-4">Stay Updated</h3>
+                <p class="text-bets-text/80 mb-6">
+                    Want to follow along as I build? Get notified when projects launch.
+                </p>
+                <form method="POST" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    {% csrf_token %}
+                    <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="your@email.com" 
+                        required
+                        class="flex-1 px-6 py-3 rounded-full bg-white/10 border-2 border-bets-primary/30 text-bets-text placeholder-bets-text/50 focus:border-bets-primary focus:outline-none focus:ring-4 focus:ring-bets-primary/20 font-mono"
+                    >
+                    <button type="submit" class="bg-bets-primary hover:bg-bets-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

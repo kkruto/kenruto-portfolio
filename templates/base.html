@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ken Ruto - Product Manager & Social Entrepreneur building technology for social impact in East Africa">
+    <meta name="author" content="Ken Ruto">
+    
+    <title>{% block title %}Ken Ruto - Product Manager & Social Entrepreneur{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}bg-white{% endblock %}">
+    <!-- Navigation -->
+    {% include 'components/nav.html' %}
+    
+    <!-- Main Content -->
+    <main class="{% block main_class %}{% endblock %}">
+        <!-- Django Messages -->
+        {% if messages %}
+        <div class="fixed top-20 right-4 z-50 space-y-2" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)">
+            {% for message in messages %}
+            <div class="bg-white border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% else %}border-blue-500{% endif %} p-4 rounded shadow-lg max-w-md">
+                <div class="flex items-center justify-between">
+                    <p class="text-sm text-gray-800">{{ message }}</p>
+                    <button @click="show = false" class="ml-4 text-gray-400 hover:text-gray-600">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+    
+    <!-- Alpine.js - MOVED TO BOTTOM -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{% static 'js/app.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
