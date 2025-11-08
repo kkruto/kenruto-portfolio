@@ -1,161 +1,200 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Ken Ruto - Product Manager & Social Entrepreneur{% endblock %}
+{% block title %}Ken Ruto - Product Manager & Engineer{% endblock %}
 
 {% block content %}
-<div class="page-transition">
-    <!-- Hero Section -->
-    <section class="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-        <div class="container mx-auto max-w-5xl text-center">
-            <h1 class="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight text-gray-900 mb-8">
-                KEN RUTO
+
+<div class="page-transition pt-32 pb-20">
+    <div class="container-custom">
+        
+        <!-- Hero Section -->
+        <section class="mb-20">
+            <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-6">
+                Ken Ruto
             </h1>
-            <p class="text-xl sm:text-2xl text-gray-600 mb-12">
-                Building technology • Creating stories • Shipping experiments • Writing ideas
-            </p>
-            
-            <div class="max-w-3xl mx-auto text-lg leading-relaxed text-gray-700 space-y-4 fade-on-scroll">
-                <p>
-                    Hi, I'm Ken. I wear many hats, and each one tells a different story.
+            <div class="prose-custom max-w-2xl">
+                <p class="text-xl text-neutral-700 mb-4">
+                    Product manager, engineer, and writer building at the intersection of technology and storytelling.
                 </p>
-                <p>
-                    Some days I'm building enterprise software for water utilities in Kenya. 
-                    Other days I'm writing film scripts or designing games. Most days I'm 
-                    shipping small bets—SaaS experiments that might work. And whenever I can, 
-                    I'm writing long essays about ideas that matter.
-                </p>
-                <p class="font-medium text-brand text-xl">
-                    Pick the version of me you're curious about ↓
+                <p class="text-lg text-neutral-600">
+                    Currently exploring how AI can amplify human creativity. Previously built products at startups and designed systems that scale.
                 </p>
             </div>
-        </div>
-    </section>
-    
-    <!-- Portal Cards -->
-    <section class="py-16 px-4 sm:px-6 lg:px-8">
-        <div class="container mx-auto max-w-6xl">
-            <!-- First Row: About & TLW -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
-                <!-- About Card -->
-                <a href="{% url 'about' %}" class="portal-card portal-card-about fade-on-scroll group block">
-                    <div class="text-center">
-                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                            💼
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
-                            ABOUT
-                        </h2>
-                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
-                            Professional Ken
-                        </p>
-                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
-                            Product manager and entrepreneur building social impact technology in East Africa. 
-                            Leading AccessWASH, mentoring students, and preparing for my next venture.
-                        </p>
-                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
-                            → Enter
-                        </span>
-                    </div>
+        </section>
+        
+        <!-- Navigation Links -->
+        <section class="mb-20">
+            <nav class="flex flex-wrap gap-4">
+                <a href="{% url 'about' %}" class="btn btn-primary">
+                    About Me
                 </a>
+                <a href="{% url 'kiota' %}" class="btn btn-secondary">
+                    Read Essays
+                </a>
+                <a href="{% url 'small_bets' %}" class="btn btn-secondary">
+                    View Projects
+                </a>
+                <a href="{% url 'resume' %}" class="btn btn-secondary">
+                    Resume
+                </a>
+            </nav>
+        </section>
+        
+        <!-- What I'm Doing Now -->
+        {% if now_items %}
+        <section class="mb-20">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">What I'm Doing Now</h2>
+            <div class="prose-custom max-w-2xl space-y-6">
+                {% for item in now_items %}
+                <div class="flex gap-4 items-start">
+                    <span class="text-3xl flex-shrink-0">{{ item.icon }}</span>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-medium text-neutral-900 mb-2">{{ item.title }}</h3>
+                        <p class="text-neutral-600">{{ item.description }}</p>
+                        {% if item.link %}
+                        <a href="{{ item.link }}" class="text-sm text-accent hover:text-accent-dark mt-2 inline-block">
+                            Learn more →
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Recently -->
+        {% if recent_activities %}
+        <section class="mb-20">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Recently</h2>
+            <div class="space-y-4">
+                {% for activity in recent_activities %}
+                <article class="border-b border-neutral-200 pb-4">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <div class="flex-1">
+                            <span class="text-xs text-neutral-500 uppercase tracking-wide">
+                                {{ activity.get_activity_type_display }}
+                            </span>
+                            <h3 class="text-lg font-medium text-neutral-900 mt-1">
+                                {% if activity.link %}
+                                <a href="{{ activity.link }}" class="hover:text-accent transition-colors">
+                                    {{ activity.title }}
+                                </a>
+                                {% else %}
+                                {{ activity.title }}
+                                {% endif %}
+                            </h3>
+                        </div>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">
+                            {{ activity.date|date:"M d, Y" }}
+                        </time>
+                    </div>
+                    <p class="text-neutral-600 text-sm">{{ activity.description }}</p>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Featured/Recent Articles -->
+        {% if featured_articles or recent_articles %}
+        <section class="mb-20">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-medium text-neutral-900">Recent Writing</h2>
+                <a href="{% url 'kiota' %}" class="text-sm text-accent hover:text-accent-dark">
+                    View all →
+                </a>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Show featured articles first -->
+                {% for article in featured_articles %}
+                <article class="border-b border-neutral-200 pb-6 hover:border-neutral-300 transition-colors group">
+                    <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
+                        <div class="flex items-start gap-4 mb-2">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="bg-accent text-white text-xs px-2 py-1 rounded">Featured</span>
+                                    {% if article.article_type != 'essay' %}
+                                    <span class="bg-neutral-200 text-neutral-700 text-xs px-2 py-1 rounded">
+                                        {{ article.get_article_type_display }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <h3 class="text-lg font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                                    {{ article.title }}
+                                </h3>
+                            </div>
+                            <time class="text-sm text-neutral-500 whitespace-nowrap">
+                                {{ article.published_date|date:"M d, Y" }}
+                            </time>
+                        </div>
+                        <p class="text-neutral-600 text-sm">{{ article.excerpt }}</p>
+                    </a>
+                </article>
+                {% endfor %}
                 
-                <!-- TLW Card -->
-                <a href="{% url 'tlw' %}" class="portal-card portal-card-tlw fade-on-scroll group block">
-                    <div class="text-center">
-                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                            🎬
+                <!-- Then show recent articles -->
+                {% for article in recent_articles %}
+                {% if not article.is_featured %}
+                <article class="border-b border-neutral-200 pb-6 hover:border-neutral-300 transition-colors group">
+                    <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
+                        <div class="flex items-baseline justify-between gap-4 mb-2">
+                            <h3 class="text-lg font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                                {{ article.title }}
+                            </h3>
+                            <time class="text-sm text-neutral-500 whitespace-nowrap">
+                                {{ article.published_date|date:"M d, Y" }}
+                            </time>
                         </div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
-                            TLW STUDIO
-                        </h2>
-                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
-                            Creator Ken
-                        </p>
-                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
-                            Stories through film, games, and interactive experiences exploring African 
-                            narratives, speculative futures, and moral questions.
-                        </p>
-                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
-                            → Enter
-                        </span>
-                    </div>
+                        <p class="text-neutral-600 text-sm">{{ article.excerpt }}</p>
+                    </a>
+                </article>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Previously (Work Experience) -->
+        {% if recent_experiences %}
+        <section class="mb-20">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-medium text-neutral-900">Previously</h2>
+                <a href="{% url 'about' %}" class="text-sm text-accent hover:text-accent-dark">
+                    Full resume →
                 </a>
             </div>
             
-            <!-- Second Row: Small Bets & Kiota -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
-                <!-- Small Bets Card -->
-                <a href="{% url 'small_bets' %}" class="portal-card portal-card-bets fade-on-scroll group block">
-                    <div class="text-center">
-                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                            🚀
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
-                            SMALL BETS
-                        </h2>
-                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
-                            Builder Ken
-                        </p>
-                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
-                            SaaS experiments and side projects shipping fast and learning faster. 
-                            Building tools for the social impact sector.
-                        </p>
-                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
-                            → Enter
-                        </span>
-                    </div>
-                </a>
-                
-                <!-- Kiota Card -->
-                <a href="{% url 'kiota' %}" class="portal-card portal-card-kiota fade-on-scroll group block">
-                    <div class="text-center">
-                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                            💡
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
-                            KIOTA
-                        </h2>
-                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
-                            Thinker Ken
-                        </p>
-                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
-                            Long-form essays on culture, tech, and ideas worth debating. Exploring 
-                            Africa's future through rigorous thinking.
-                        </p>
-                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
-                            → Enter
-                        </span>
-                    </div>
-                </a>
+            <div class="space-y-6">
+                {% for exp in recent_experiences %}
+                <div class="prose-custom">
+                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
+                        {{ exp.title }} at {{ exp.organization }}
+                    </h3>
+                    <p class="text-sm text-neutral-600 mb-3">
+                        {{ exp.start_date|date:"Y" }} - 
+                        {% if exp.is_current %}
+                            Present
+                        {% elif exp.end_date %}
+                            {{ exp.end_date|date:"Y" }}
+                        {% endif %}
+                        {% if exp.location %} • {{ exp.location }}{% endif %}
+                    </p>
+                    <p class="text-neutral-700">{{ exp.description|truncatewords:30 }}</p>
+                </div>
+                {% endfor %}
             </div>
-            
-            <!-- Third Row: Gallery (Centered) -->
-            <div class="flex justify-center">
-                <a href="{% url 'gallery' %}" class="portal-card portal-card-gallery fade-on-scroll group block max-w-md w-full">
-                    <div class="text-center">
-                        <div class="text-6xl mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                            📸
-                        </div>
-                        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 mb-3">
-                            GALLERY
-                        </h2>
-                        <p class="text-base sm:text-lg text-gray-600 mb-4 font-medium">
-                            Explorer Ken
-                        </p>
-                        <p class="text-sm sm:text-base leading-relaxed text-gray-500 mb-6">
-                            Photos from travels across East Africa and North America. Moments, 
-                            perspectives, and places that shaped my thinking.
-                        </p>
-                        <span class="text-brand font-semibold group-hover:translate-x-2 inline-block transition-transform duration-300 text-lg">
-                            → Enter
-                        </span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Newsletter Section -->
-    {% include 'components/newsletter.html' %}
+        </section>
+        {% endif %}
+        
+        <!-- Newsletter CTA -->
+        <section>
+            {% include 'components/newsletter.html' %}
+        </section>
+        
+    </div>
 </div>
+
 {% endblock %}

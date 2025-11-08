@@ -1,106 +1,194 @@
-// Wait for Alpine to be ready
+/**
+ * ============================================
+ * ALPINE.JS SETUP & CONFIGURATION
+ * ============================================
+ * 
+ * Alpine.js is a minimal JavaScript framework that adds interactivity
+ * to your HTML without writing complex JavaScript.
+ * 
+ * Think of it as "Tailwind for JavaScript" - you add functionality
+ * directly in your HTML using special attributes.
+ */
+
+// Wait for the DOM to be fully loaded before initializing
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🏔️ Alpine.js is ready!');
+});
+
+/**
+ * ============================================
+ * ALPINE.JS CHEAT SHEET FOR YOUR REFERENCE
+ * ============================================
+ * 
+ * 1. x-data="{ key: value }"
+ *    - Declares a component's reactive state
+ *    - Example: <div x-data="{ open: false }">
+ * 
+ * 2. x-show="condition"
+ *    - Toggle visibility (element stays in DOM)
+ *    - Example: <div x-show="open">Content</div>
+ * 
+ * 3. x-if="condition"
+ *    - Conditional rendering (element removed from DOM)
+ *    - Must be on a <template> tag
+ *    - Example: <template x-if="open"><div>Content</div></template>
+ * 
+ * 4. @click="action"
+ *    - Shorthand for x-on:click
+ *    - Handle click events
+ *    - Example: <button @click="open = !open">Toggle</button>
+ * 
+ * 5. :class="condition"
+ *    - Shorthand for x-bind:class
+ *    - Dynamic class binding
+ *    - Example: <div :class="open ? 'block' : 'hidden'">
+ * 
+ * 6. x-transition
+ *    - Smooth transitions when showing/hiding
+ *    - Example: <div x-show="open" x-transition>
+ * 
+ * 7. x-model="variable"
+ *    - Two-way data binding for inputs
+ *    - Example: <input x-model="email">
+ * 
+ * 8. x-text="expression"
+ *    - Update element's text content
+ *    - Example: <span x-text="count"></span>
+ * 
+ * 9. x-html="expression"
+ *    - Update element's HTML content
+ *    - Example: <div x-html="content"></div>
+ * 
+ * 10. x-for="item in items"
+ *     - Loop through arrays
+ *     - Example: <template x-for="item in list"><li x-text="item"></li></template>
+ */
+
+/**
+ * ============================================
+ * GLOBAL ALPINE.JS STORES (Optional)
+ * ============================================
+ * 
+ * You can create global state that's accessible across all components:
+ */
+
+// Example: Global state store (uncomment if needed)
+/*
 document.addEventListener('alpine:init', () => {
-  console.log('Alpine.js initialized');
-  
-  // Global navigation store
   Alpine.store('navigation', {
-    transitioning: false,
-    currentPage: window.location.pathname,
-    
-    navigate(url) {
-      this.transitioning = true;
-      setTimeout(() => {
-        window.location.href = url;
-      }, 300);
-    }
-  });
-  
-  // Mobile menu store
-  Alpine.store('menu', {
-    open: false,
-    
-    toggle() {
-      this.open = !this.open;
-      console.log('Menu toggled:', this.open);
-    },
-    
-    close() {
-      this.open = false;
-    }
-  });
-  
-  // Newsletter form component
-  Alpine.data('newsletterForm', () => ({
-    email: '',
-    loading: false,
+    currentPath: window.location.pathname,
+    isScrolled: false,
     
     init() {
-      console.log('Newsletter form initialized');
-    },
-    
-    submit() {
-      if (!this.email) {
-        alert('Please enter your email');
-        return false;
-      }
-      this.loading = true;
-      return true;
+      // Track scroll position
+      window.addEventListener('scroll', () => {
+        this.isScrolled = window.scrollY > 50;
+      });
     }
-  }));
-  
-  // Smooth scroll magic
-  Alpine.magic('scrollTo', () => {
-    return (selector) => {
-      const element = document.querySelector(selector);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
   });
+});
+*/
+
+/**
+ * ============================================
+ * UTILITY FUNCTIONS
+ * ============================================
+ */
+
+// Smooth scroll to element
+function scrollToElement(elementId) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Copy text to clipboard
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    console.log('✅ Copied to clipboard');
+  }).catch(err => {
+    console.error('❌ Failed to copy:', err);
+  });
+}
+
+/**
+ * ============================================
+ * PAGE TRANSITION EFFECTS
+ * ============================================
+ */
+
+// Add fade-in effect to page content
+window.addEventListener('load', () => {
+  const content = document.querySelector('.page-transition');
+  if (content) {
+    content.style.opacity = '0';
+    setTimeout(() => {
+      content.style.opacity = '1';
+    }, 100);
+  }
 });
 
-// Intersection Observer for fade-in animations
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded, setting up observers');
-  
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('animate-fade-in');
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-  
-  // Observe all elements with fade-on-scroll class
-  const fadeElements = document.querySelectorAll('.fade-on-scroll');
-  console.log('Found fade elements:', fadeElements.length);
-  
-  fadeElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    observer.observe(el);
-  });
-});
+/**
+ * ============================================
+ * FORM HANDLING UTILITIES
+ * ============================================
+ */
 
-// Add smooth hover effects to portal cards
-document.addEventListener('DOMContentLoaded', () => {
-  const portalCards = document.querySelectorAll('.portal-card');
+// Handle newsletter form submission
+function handleNewsletterSubmit(event) {
+  // The form will be submitted normally to Django
+  // You can add additional client-side validation here if needed
+  const email = event.target.querySelector('input[type="email"]').value;
   
-  portalCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-8px)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateY(0)';
-    });
+  if (!email || !email.includes('@')) {
+    event.preventDefault();
+    alert('Please enter a valid email address');
+    return false;
+  }
+  
+  return true;
+}
+
+/**
+ * ============================================
+ * ACCESSIBILITY HELPERS
+ * ============================================
+ */
+
+// Trap focus within modal/menu (for accessibility)
+function trapFocus(element) {
+  const focusableElements = element.querySelectorAll(
+    'a[href], button:not([disabled]), textarea, input, select'
+  );
+  
+  const firstFocusable = focusableElements[0];
+  const lastFocusable = focusableElements[focusableElements.length - 1];
+  
+  element.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      if (e.shiftKey && document.activeElement === firstFocusable) {
+        e.preventDefault();
+        lastFocusable.focus();
+      } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+        e.preventDefault();
+        firstFocusable.focus();
+      }
+    }
   });
-});
+}
+
+/**
+ * ============================================
+ * CONSOLE MESSAGE
+ * ============================================
+ */
+
+console.log(`
+╔═══════════════════════════════════════╗
+║   🏔️  ALPINE.JS LOADED SUCCESSFULLY  ║
+║                                       ║
+║   Your interactive components are     ║
+║   now ready to use!                   ║
+╚═══════════════════════════════════════╝
+`);

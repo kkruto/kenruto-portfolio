@@ -2,85 +2,73 @@
 module.exports = {
   content: [
     './templates/**/*.html',
-    './core/templates/**/*.html',
     './static/js/**/*.js',
   ],
   theme: {
     extend: {
       colors: {
-        brand: {
-          DEFAULT: '#F59E0B',
-          light: '#FCD34D',
-          dark: '#D97706',
+        // Minimal color palette - neutral grays + accent
+        'neutral': {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
         },
-        about: {
-          primary: '#1E3A8A',
-          secondary: '#F59E0B',
-          bg: '#F8FAFC',
-          text: '#1E293B',
-          accent: '#3B82F6',
-        },
-        tlw: {
-          primary: '#7C2D12',
-          secondary: '#FBBF24',
-          bg: '#0F0F0F',
-          text: '#F1F5F9',
-          accent: '#DC2626',
-        },
-        bets: {
-          primary: '#0EA5E9',
-          secondary: '#84CC16',
-          bg: '#111827',
-          text: '#10B981',
-          accent: '#F97316',
-        },
-        kiota: {
-          primary: '#374151',
-          secondary: '#059669',
-          bg: '#FFFBEB',
-          text: '#1F2937',
-          accent: '#0891B2',
-        },
-        gallery: {
-          primary: '#0C4A6E',
-          secondary: '#EA580C',
-          bg: '#FFFFFF',
-          text: '#18181B',
+        'accent': {
+          DEFAULT: '#2563eb', // blue-600
+          light: '#3b82f6',   // blue-500
+          dark: '#1d4ed8',    // blue-700
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
-        serif: ['Lora', 'serif'],
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Oxygen',
+          'Ubuntu',
+          'Cantarell',
+          'Helvetica Neue',
+          'sans-serif',
+        ],
+        mono: [
+          'ui-monospace',
+          'SFMono-Regular',
+          'SF Mono',
+          'Consolas',
+          'Liberation Mono',
+          'Menlo',
+          'monospace',
+        ],
       },
-      transitionDuration: {
-        '400': '400ms',
-        '600': '600ms',
-        '700': '700ms',
+      maxWidth: {
+        'prose': '65ch',
+        'content': '720px',
       },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-down': 'slideDown 0.5s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        slideDown: {
-          '0%': { transform: 'translateY(-20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '65ch',
+            color: '#404040',
+            a: {
+              color: '#2563eb',
+              '&:hover': {
+                color: '#1d4ed8',
+              },
+            },
+          },
         },
       },
     },
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
   ],
 }

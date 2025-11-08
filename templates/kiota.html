@@ -1,112 +1,147 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Kiota - Ken Ruto{% endblock %}
-
-{% block body_class %}bg-kiota-bg text-kiota-text{% endblock %}
+{% block title %}Essays - Ken Ruto{% endblock %}
 
 {% block content %}
-<div class="page-transition min-h-screen">
-    <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-        <div class="container mx-auto max-w-4xl">
-            <div class="text-center mb-16">
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-serif font-bold text-kiota-text mb-6 animate-fade-in">
-                    KIOTA
-                </h1>
-                <p class="text-xl sm:text-2xl text-kiota-text/80 mb-8">
-                    Essays • Visualizations • Ideas
-                </p>
-                <p class="text-lg text-kiota-secondary italic">
-                    Long-form thinking on culture, tech, and Africa
-                </p>
-            </div>
+
+<!-- 
+    ESSAYS PAGE - Minimal Blog Listing
+    ===================================
+    
+    Clean article listing with dates, inspired by the reference screenshot.
+    Perfect for essays, articles, and long-form writing.
+-->
+
+<div class="page-transition pt-32 pb-20">
+    <div class="container-custom max-w-3xl">
+        
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-neutral-500 mb-8">
+            <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
+            <span class="mx-2">></span>
+            <span class="text-neutral-900">Essays</span>
+        </nav>
+        
+        <!-- Page Header -->
+        <header class="mb-16">
+            <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-6">
+                Essays
+            </h1>
+            <p class="text-lg text-neutral-700 max-w-2xl">
+                Thoughts on building products, learning in public, and the intersection of technology and creativity.
+            </p>
+        </header>
+        
+        <!-- Articles List -->
+        <div class="space-y-8">
             
-            <!-- Minimalist Illustration Placeholder -->
-            <div class="relative w-full h-64 bg-gradient-to-br from-kiota-secondary/10 to-kiota-primary/10 rounded-2xl overflow-hidden mb-16 flex items-center justify-center border border-kiota-primary/20">
-                <div class="text-center p-8">
-                    <svg class="w-24 h-24 mx-auto mb-4 text-kiota-primary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                    </svg>
-                    <p class="text-kiota-text/60 text-lg font-serif">Essays coming soon</p>
-                </div>
-            </div>
-            
-            <div class="max-w-2xl mx-auto space-y-6 text-lg leading-relaxed text-kiota-text mb-12">
-                <h2 class="text-3xl font-serif font-bold text-kiota-primary mb-6 text-center">LAUNCHING SOON</h2>
-                <p>
-                    This is where I think out loud.
-                </p>
-                <p>
-                    I'm preparing a series of essays exploring technology, effective altruism, and building in Africa. 
-                    Some will be polished arguments with research and citations. Others will be messy explorations 
-                    of ideas I'm still figuring out.
-                </p>
-                
-                <div class="bg-kiota-primary/5 rounded-lg p-6 my-8 border-l-4 border-kiota-secondary">
-                    <h3 class="font-semibold text-kiota-primary mb-4">Topics I'll be writing about:</h3>
-                    <ul class="space-y-2 text-kiota-text/80">
-                        <li class="flex items-start">
-                            <span class="text-kiota-secondary mr-2">•</span>
-                            <span><strong>Genesis:</strong> Betting on infrastructure, AI, and arts for Africa's next decade</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-kiota-secondary mr-2">•</span>
-                            <span><strong>The Water Paradox:</strong> Why the most important technology gets the least attention</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-kiota-secondary mr-2">•</span>
-                            <span><strong>Cargo Cult of Silicon Valley:</strong> Copying aesthetics without understanding conditions</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-kiota-secondary mr-2">•</span>
-                            <span>Effective altruism in non-Western contexts</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-kiota-secondary mr-2">•</span>
-                            <span>Building technology that respects African realities</span>
-                        </li>
-                    </ul>
-                </div>
-                
-                <p class="text-center text-kiota-secondary font-semibold">
-                    First essays coming December 2025
-                </p>
-            </div>
-            
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <a href="{% url 'about' %}" class="bg-kiota-primary hover:bg-kiota-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
-                    → Learn about my work
+            <!-- Article Entry -->
+            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                <a href="#" class="block no-underline">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                            My North Star
+                        </h2>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">Jun 7, 2025</time>
+                    </div>
+                    <p class="text-neutral-600 leading-relaxed">
+                        Reflections on finding direction in an age of infinite possibilities. How I think about goals, constraints, and the long game.
+                    </p>
                 </a>
-                <a href="{% url 'small_bets' %}" class="border-2 border-kiota-secondary text-kiota-secondary hover:bg-kiota-secondary hover:text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
-                    → See what I'm building
-                </a>
-            </div>
+            </article>
             
-            <!-- Newsletter -->
-            <div class="bg-white rounded-2xl p-8 border-2 border-kiota-primary/20 text-center shadow-sm">
-                <h3 class="text-2xl font-serif font-bold text-kiota-text mb-4">Get Notified When Essays Launch</h3>
-                <p class="text-kiota-text/80 mb-6">
-                    Join the mailing list to be the first to read new essays
-                </p>
-                <form method="POST" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                    {% csrf_token %}
-                    <input 
-                        type="email" 
-                        name="email" 
-                        placeholder="your@email.com" 
-                        required
-                        class="flex-1 px-6 py-3 rounded-full bg-white border-2 border-kiota-primary/30 text-kiota-text placeholder-kiota-text/50 focus:border-kiota-primary focus:outline-none focus:ring-4 focus:ring-kiota-primary/20"
-                    >
-                    <button type="submit" class="bg-kiota-secondary hover:bg-kiota-secondary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors whitespace-nowrap">
-                        Subscribe
-                    </button>
-                </form>
-                <p class="text-sm text-kiota-text/60 mt-4">
-                    No spam. Only essays. Unsubscribe anytime.
-                </p>
-            </div>
+            <!-- Article Entry -->
+            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                <a href="#" class="block no-underline">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                            Infinity (a thought experiment)
+                        </h2>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">Dec 10, 2024</time>
+                    </div>
+                    <p class="text-neutral-600 leading-relaxed">
+                        What happens when you can do anything? A meditation on constraints, creativity, and the paradox of choice.
+                    </p>
+                </a>
+            </article>
+            
+            <!-- Article Entry -->
+            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                <a href="#" class="block no-underline">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                            Building Products That Matter
+                        </h2>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">Nov 15, 2024</time>
+                    </div>
+                    <p class="text-neutral-600 leading-relaxed">
+                        Beyond features and metrics: how to build things people actually care about. Lessons from 5 years in product.
+                    </p>
+                </a>
+            </article>
+            
+            <!-- Article Entry -->
+            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                <a href="#" class="block no-underline">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                            The Small Bets Philosophy
+                        </h2>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">Oct 22, 2024</time>
+                    </div>
+                    <p class="text-neutral-600 leading-relaxed">
+                        Why I'm betting on shipping fast, learning faster, and building multiple revenue streams. Inspired by Daniel Vassallo and Pieter Levels.
+                    </p>
+                </a>
+            </article>
+            
+            <!-- Article Entry -->
+            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                <a href="#" class="block no-underline">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                            Learning to Write Code and Stories
+                        </h2>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">Sep 8, 2024</time>
+                    </div>
+                    <p class="text-neutral-600 leading-relaxed">
+                        The surprising overlap between software engineering and storytelling. Both require structure, empathy, and iteration.
+                    </p>
+                </a>
+            </article>
+            
+            <!-- Article Entry -->
+            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                <a href="#" class="block no-underline">
+                    <div class="flex items-baseline justify-between gap-4 mb-2">
+                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                            From Nairobi to San Francisco
+                        </h2>
+                        <time class="text-sm text-neutral-500 whitespace-nowrap">Jul 30, 2024</time>
+                    </div>
+                    <p class="text-neutral-600 leading-relaxed">
+                        What I learned moving from one tech ecosystem to another. On culture, opportunity, and staying connected to your roots.
+                    </p>
+                </a>
+            </article>
+            
         </div>
-    </section>
+        
+        <!-- Pagination (if needed) -->
+        {% comment %}
+        <div class="flex justify-center gap-4 mt-16">
+            <a href="#" class="btn btn-secondary">← Newer</a>
+            <a href="#" class="btn btn-secondary">Older →</a>
+        </div>
+        {% endcomment %}
+        
+        <!-- Newsletter CTA -->
+        <div class="mt-20">
+            {% include 'components/newsletter.html' with newsletter_title="Get New Essays" newsletter_description="I write about product, technology, and creativity. No spam, just thoughtful essays when I have something worth sharing." %}
+        </div>
+        
+    </div>
 </div>
+
 {% endblock %}

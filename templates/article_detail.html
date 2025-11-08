@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ article.title }} - Ken Ruto{% endblock %}
+
+{% block content %}
+
+<!-- 
+    SINGLE ESSAY/ARTICLE PAGE
+    =========================
+    
+    Template for individual blog posts and essays.
+    Clean, readable, focused on content.
+-->
+
+<article class="page-transition pt-32 pb-20">
+    <div class="container-custom max-w-3xl">
+        
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-neutral-500 mb-8">
+            <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
+            <span class="mx-2">></span>
+            <a href="{% url 'kiota' %}" class="hover:text-neutral-700">Essays</a>
+            <span class="mx-2">></span>
+            <span class="text-neutral-900">{{ article.title|default:"Article Title" }}</span>
+        </nav>
+        
+        <!-- Article Header -->
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-4 leading-tight">
+                {{ article.title|default:"The Title of Your Essay Goes Here" }}
+            </h1>
+            
+            <!-- Meta information -->
+            <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-600">
+                <time datetime="{{ article.published_date|date:'Y-m-d' }}">
+                    {{ article.published_date|date:"F d, Y"|default:"January 15, 2025" }}
+                </time>
+                <span>•</span>
+                <span>{{ article.read_time|default:"8" }} min read</span>
+                {% if article.tags %}
+                <span>•</span>
+                <div class="flex gap-2">
+                    {% for tag in article.tags %}
+                    <span class="bg-neutral-100 px-3 py-1 rounded-full text-xs">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </header>
+        
+        <!-- Featured Image (optional) -->
+        {% if article.featured_image %}
+        <figure class="mb-12">
+            <img 
+                src="{{ article.featured_image }}" 
+                alt="{{ article.title }}"
+                class="w-full rounded-lg"
+            >
+            {% if article.image_caption %}
+            <figcaption class="text-sm text-neutral-600 mt-3 text-center italic">
+                {{ article.image_caption }}
+            </figcaption>
+            {% endif %}
+        </figure>
+        {% endif %}
+        
+        <!-- Article Content -->
+        <div class="prose-custom max-w-none">
+            <!-- 
+                CONTENT AREA
+                ============
+                This is where your essay content goes.
+                Use Django template variable or editor content.
+            -->
+            
+            {% if article.content %}
+                {{ article.content|safe }}
+            {% else %}
+                <!-- Example article content -->
+                <p class="text-lg text-neutral-700 leading-relaxed mb-6">
+                    This is the opening paragraph of your essay. It should hook the reader and set up what you're going to explore. Make it compelling but concise.
+                </p>
+                
+                <h2>Section Heading</h2>
+                <p>
+                    This is a regular paragraph in your essay. Keep paragraphs focused on one idea. Use line breaks generously for readability. Digital reading is different from print.
+                </p>
+                
+                <p>
+                    You can <a href="#">include links</a> to reference material or related content. Links should be underlined and easy to identify.
+                </p>
+                
+                <h2>Another Section</h2>
+                <p>
+                    Use headings to break up long content and help readers scan. Good headings tell a story by themselves.
+                </p>
+                
+                <ul>
+                    <li>Bullet points are great for lists</li>
+                    <li>They make content easier to scan</li>
+                    <li>But don't overuse them</li>
+                </ul>
+                
+                <blockquote class="border-l-4 border-accent pl-6 my-8 italic text-neutral-700">
+                    "Quotes and callouts can emphasize important points or add variety to your essay's rhythm."
+                </blockquote>
+                
+                <h2>Visual Content</h2>
+                <p>
+                    You can embed images, videos, or other media throughout your essay. Make sure they add value and aren't just decoration.
+                </p>
+                
+                <!-- Example embedded image -->
+                <figure class="my-8">
+                    <img 
+                        src="https://via.placeholder.com/800x400" 
+                        alt="Example image"
+                        class="w-full rounded-lg"
+                    >
+                    <figcaption class="text-sm text-neutral-600 mt-3 text-center italic">
+                        Caption explaining what the image shows
+                    </figcaption>
+                </figure>
+                
+                <h2>Code Examples</h2>
+                <p>
+                    If you're writing technical content, code blocks work well:
+                </p>
+                
+                <pre class="bg-neutral-100 rounded-lg p-6 overflow-x-auto my-6"><code class="text-sm font-mono text-neutral-800">function example() {
+    console.log("Code blocks are styled for readability");
+    return true;
+}</code></pre>
+                
+                <h2>Closing Thoughts</h2>
+                <p>
+                    End with a strong conclusion that ties everything together. What do you want readers to remember? What action should they take?
+                </p>
+                
+                <p class="text-lg text-neutral-700 mt-8">
+                    The best essays make you think differently about something you thought you understood. That's the goal.
+                </p>
+            {% endif %}
+        </div>
+        
+        <!-- Article Footer -->
+        <footer class="mt-16 pt-8 border-t border-neutral-200">
+            
+            <!-- Share Buttons -->
+            <div class="flex flex-wrap items-center gap-4 mb-8">
+                <span class="text-sm text-neutral-600">Share this:</span>
+                <a 
+                    href="https://twitter.com/intent/tweet?text={{ article.title|urlencode }}&url={{ request.build_absolute_uri }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-secondary text-sm"
+                >
+                    Twitter
+                </a>
+                <a 
+                    href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn btn-secondary text-sm"
+                >
+                    LinkedIn
+                </a>
+                <button 
+                    onclick="navigator.clipboard.writeText('{{ request.build_absolute_uri }}'); alert('Link copied!');"
+                    class="btn btn-secondary text-sm"
+                >
+                    Copy Link
+                </button>
+            </div>
+            
+            <!-- Author Bio -->
+            <div class="bg-neutral-100 rounded-2xl p-8">
+                <div class="flex gap-6 items-start">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 rounded-full bg-neutral-300"></div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-neutral-900 mb-2">Ken Ruto</h3>
+                        <p class="text-neutral-700 mb-4">
+                            Product manager and engineer writing about technology, creativity, and building things that matter.
+                        </p>
+                        <a href="{% url 'about' %}" class="text-accent hover:text-accent-dark text-sm font-medium">
+                            More about me →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Related Articles (optional) -->
+        {% if related_articles %}
+        <section class="mt-16">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-8">Related Essays</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                {% for related in related_articles %}
+                <article class="card">
+                    <a href="#" class="no-underline">
+                        <h3 class="text-lg font-medium text-neutral-900 mb-2 hover:text-accent transition-colors">
+                            {{ related.title }}
+                        </h3>
+                        <p class="text-sm text-neutral-600 mb-3">
+                            {{ related.excerpt }}
+                        </p>
+                        <time class="text-xs text-neutral-500">{{ related.published_date|date:"F d, Y" }}</time>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Back to Essays -->
+        <div class="mt-12 text-center">
+            <a href="{% url 'kiota' %}" class="text-neutral-600 hover:text-neutral-900 text-sm">
+                ← Back to all essays
+            </a>
+        </div>
+        
+        <!-- Newsletter CTA -->
+        <div class="mt-16">
+            {% include 'components/newsletter.html' with newsletter_title="Enjoyed this essay?" newsletter_description="Get notified when I publish new writing. No spam, just thoughtful essays." %}
+        </div>
+        
+    </div>
+</article>
+
+{% endblock %}

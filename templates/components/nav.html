@@ -1,48 +1,186 @@
-<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200" x-data="{ mobileMenuOpen: false }">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
-            <!-- Logo -->
-            <a href="{% url 'home' %}" class="text-xl font-bold text-gray-900 hover:text-brand transition-colors duration-200">
-                KEN RUTO
+{% load static %}
+
+<!-- 
+    NAVIGATION COMPONENT WITH ALPINE.JS
+    =====================================
+    
+    This component demonstrates key Alpine.js concepts:
+    
+    1. x-data: Initializes component state
+       - mobileMenuOpen: Controls mobile menu visibility
+       - currentPath: Tracks active page for highlighting
+    
+    2. @click: Handles click events
+       - Opens/closes mobile menu
+       - Toggles boolean values
+    
+    3. x-show: Conditionally displays elements
+       - Shows/hides mobile menu based on mobileMenuOpen
+    
+    4. :class: Dynamic CSS classes
+       - Adds 'active' class to current page link
+       - Changes styles based on state
+    
+    5. x-transition: Smooth animations
+       - Fades mobile menu in/out
+       - Adds professional polish
+-->
+
+<nav 
+    x-data="{ 
+        mobileMenuOpen: false, 
+        currentPath: '{{ request.path }}',
+        scrolled: false
+    }"
+    x-init="
+        window.addEventListener('scroll', () => {
+            scrolled = window.scrollY > 20;
+        })
+    "
+    :class="scrolled ? 'bg-white/80 backdrop-blur-sm shadow-sm' : 'bg-transparent'"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+    <div class="container-custom">
+        <div class="flex items-center justify-between py-6">
+            
+            <!-- Logo / Name -->
+            <a href="{% url 'home' %}" class="no-underline">
+                <h1 class="text-xl font-medium text-neutral-900 hover:text-accent transition-colors">
+                    Ken Ruto
+                </h1>
             </a>
             
             <!-- Desktop Navigation -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="{% url 'about' %}" class="nav-link">About</a>
-                <a href="{% url 'tlw' %}" class="nav-link">TLW</a>
-                <a href="{% url 'small_bets' %}" class="nav-link">Small Bets</a>
-                <a href="{% url 'kiota' %}" class="nav-link">Kiota</a>
-                <a href="{% url 'gallery' %}" class="nav-link">Gallery</a>
-                <a href="mailto:kkimtai@gmail.com" class="btn-primary text-sm">Contact</a>
+                <a 
+                    href="{% url 'home' %}" 
+                    class="nav-link"
+                    :class="currentPath === '/' || currentPath === '/home/' ? 'active' : ''"
+                >
+                    Home
+                </a>
+                <a 
+                    href="{% url 'about' %}" 
+                    class="nav-link"
+                    :class="currentPath === '/about/' ? 'active' : ''"
+                >
+                    About
+                </a>
+                <a 
+                    href="{% url 'kiota' %}" 
+                    class="nav-link"
+                    :class="currentPath.includes('/kiota') ? 'active' : ''"
+                >
+                    Essays
+                </a>
+                <a 
+                    href="{% url 'small_bets' %}" 
+                    class="nav-link"
+                    :class="currentPath.includes('/projects') ? 'active' : ''"
+                >
+                    Projects
+                </a>
             </div>
             
             <!-- Mobile Menu Button -->
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            <!-- 
+                @click: When clicked, toggle mobileMenuOpen between true/false
+                This is Alpine.js event handling - super simple!
+            -->
+            <button 
+                @click="mobileMenuOpen = !mobileMenuOpen"
+                class="md:hidden p-2 text-neutral-600 hover:text-neutral-900"
+                aria-label="Toggle menu"
+            >
+                <!-- Hamburger icon when menu is closed -->
+                <svg 
+                    x-show="!mobileMenuOpen" 
+                    class="w-6 h-6" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                
+                <!-- X icon when menu is open -->
+                <svg 
+                    x-show="mobileMenuOpen" 
+                    class="w-6 h-6" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
         </div>
     </div>
     
-    <!-- Mobile Menu -->
-    <div x-show="mobileMenuOpen" 
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 transform scale-95"
-         x-transition:enter-end="opacity-100 transform scale-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100 transform scale-100"
-         x-transition:leave-end="opacity-0 transform scale-95"
-         class="md:hidden border-t border-gray-200 bg-white"
-         @click.away="mobileMenuOpen = false">
-        <div class="px-4 py-6 space-y-4">
-            <a href="{% url 'about' %}" class="block text-lg font-medium text-gray-700 hover:text-brand transition-colors">About</a>
-            <a href="{% url 'tlw' %}" class="block text-lg font-medium text-gray-700 hover:text-brand transition-colors">TLW</a>
-            <a href="{% url 'small_bets' %}" class="block text-lg font-medium text-gray-700 hover:text-brand transition-colors">Small Bets</a>
-            <a href="{% url 'kiota' %}" class="block text-lg font-medium text-gray-700 hover:text-brand transition-colors">Kiota</a>
-            <a href="{% url 'gallery' %}" class="block text-lg font-medium text-gray-700 hover:text-brand transition-colors">Gallery</a>
-            <a href="mailto:kkimtai@gmail.com" class="block btn-primary text-center mt-4">Contact</a>
+    <!-- Mobile Menu Dropdown -->
+    <!-- 
+        x-show: Only show this when mobileMenuOpen is true
+        x-transition: Add smooth fade and slide animation
+        @click.away: Close menu when clicking outside (Alpine magic!)
+    -->
+    <div 
+        x-show="mobileMenuOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2"
+        @click.away="mobileMenuOpen = false"
+        class="md:hidden bg-white border-t border-neutral-200 shadow-lg"
+    >
+        <div class="container-custom py-4 space-y-2">
+            <a 
+                href="{% url 'home' %}" 
+                class="block px-4 py-3 rounded-lg nav-link"
+                :class="currentPath === '/' || currentPath === '/home/' ? 'bg-neutral-100 active' : ''"
+                @click="mobileMenuOpen = false"
+            >
+                Home
+            </a>
+            <a 
+                href="{% url 'about' %}" 
+                class="block px-4 py-3 rounded-lg nav-link"
+                :class="currentPath === '/about/' ? 'bg-neutral-100 active' : ''"
+                @click="mobileMenuOpen = false"
+            >
+                About
+            </a>
+            <a 
+                href="{% url 'kiota' %}" 
+                class="block px-4 py-3 rounded-lg nav-link"
+                :class="currentPath.includes('/kiota') ? 'bg-neutral-100 active' : ''"
+                @click="mobileMenuOpen = false"
+            >
+                Essays
+            </a>
+            <a 
+                href="{% url 'small_bets' %}" 
+                class="block px-4 py-3 rounded-lg nav-link"
+                :class="currentPath.includes('/projects') ? 'bg-neutral-100 active' : ''"
+                @click="mobileMenuOpen = false"
+            >
+                Projects
+            </a>
         </div>
     </div>
 </nav>
+
+<!-- 
+    KEY TAKEAWAYS:
+    ===============
+    
+    1. x-data creates reactive state (like React useState)
+    2. @click handles events (like onClick in React)
+    3. x-show toggles visibility (element stays in DOM)
+    4. :class dynamically adds CSS classes
+    5. x-transition adds smooth animations automatically
+    6. @click.away is Alpine magic for "click outside"
+    
+    This is ALL the JavaScript you need for a working mobile menu!
+-->

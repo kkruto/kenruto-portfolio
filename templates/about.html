@@ -3,515 +3,213 @@
 
 {% block title %}About - Ken Ruto{% endblock %}
 
-{% block body_class %}bg-about-bg{% endblock %}
-
 {% block content %}
-<div class="page-transition">
-    <!-- Hero Section -->
-    <section class="pt-32 pb-16 px-4 sm:px-6 lg:px-8">
-        <div class="container mx-auto max-w-6xl">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-                <!-- Sidebar -->
-                <aside class="lg:col-span-3">
-                    <div class="lg:sticky lg:top-24 space-y-8">
-                        <!-- Profile Photo -->
-                        <div class="flex justify-center lg:justify-start">
-                            <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-about-primary shadow-lg">
-                                <img src="{% static 'images/profile.jpg' %}" alt="Ken Ruto" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-                        
-                        <!-- Quick Nav (Desktop) -->
-                        <nav class="hidden lg:block space-y-3">
-                            <p class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Quick Nav</p>
-                            <a href="#now" class="block text-about-primary hover:text-about-accent transition-colors font-medium">
-                                • Now
-                            </a>
-                            <a href="#recently" class="block text-about-primary hover:text-about-accent transition-colors font-medium">
-                                • Recently
-                            </a>
-                            <a href="#previously" class="block text-about-primary hover:text-about-accent transition-colors font-medium">
-                                • Previously
-                            </a>
-                            <a href="#resume" class="block text-about-primary hover:text-about-accent transition-colors font-medium">
-                                • Resume
-                            </a>
-                        </nav>
-                    </div>
-                </aside>
+
+<!-- 
+    ABOUT PAGE - Minimal Design
+    ============================
+    
+    Structure inspired by Alisa Rae's about page:
+    - Personal intro
+    - "Previously" section (work experience)
+    - "Other" section (interests, hobbies)
+    - "Links about me" section
+-->
+
+<div class="page-transition pt-32 pb-20">
+    <div class="container-custom max-w-3xl">
+        
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-neutral-500 mb-8">
+            <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
+            <span class="mx-2">></span>
+            <span class="text-neutral-900">About</span>
+        </nav>
+        
+        <!-- Page Title -->
+        <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-12">
+            About
+        </h1>
+        
+        <!-- Personal Intro -->
+        <section class="prose-custom mb-16">
+            <p class="text-lg leading-relaxed mb-4">
+                Hi, I'm Ken. I'm {{ age|default:"27" }} years old, originally from Nairobi, Kenya and now in San Francisco, US.
+            </p>
+            <p class="leading-relaxed mb-4">
+                I build products that help people create, learn, and connect. My background spans product management, engineering, and design—which means I can speak to users, developers, and stakeholders in their own language.
+            </p>
+            <p class="leading-relaxed">
+                I believe the best products emerge from deep curiosity about people's problems and rapid experimentation with solutions. I write about this process, document my experiments, and share what I learn along the way.
+            </p>
+        </section>
+        
+        <!-- Previously Section -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Previously</h2>
+            
+            <div class="space-y-6">
+                <!-- Experience 1 -->
+                <div class="prose-custom">
+                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
+                        Product Manager at TechCorp
+                    </h3>
+                    <p class="text-sm text-neutral-600 mb-3">2022 - Present • San Francisco</p>
+                    <ul class="space-y-2 text-neutral-700">
+                        <li>Led product strategy for AI-powered tools used by 100k+ creators</li>
+                        <li>Reduced user churn by 40% through improved onboarding and activation flows</li>
+                        <li>Shipped 15+ features from concept to production in cross-functional team</li>
+                    </ul>
+                </div>
                 
-                <!-- Main Content -->
-                <main class="lg:col-span-9">
-                    <!-- Header -->
-                    <div class="mb-12 fade-on-scroll">
-                        <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-                            KEN RUTO
-                        </h1>
-                        <p class="text-xl lg:text-2xl text-about-primary font-semibold mb-3">
-                            Product Manager & Social Entrepreneur
-                        </p>
-                        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                            Building technology for social impact in East Africa
-                        </p>
-                        
-                        <!-- Action Buttons -->
-                        <div class="flex flex-wrap gap-4 mb-6">
-                            <a href="{% static 'documents/ken_ruto_resume.pdf' %}" download class="btn-primary">
-                                📄 Download Resume
-                            </a>
-                            <a href="https://www.linkedin.com/in/ken-ruto/" target="_blank" class="btn-secondary">
-                                LinkedIn
-                            </a>
-                            <a href="mailto:kkimtai@gmail.com" class="btn-secondary">
-                                Email
-                            </a>
-                        </div>
-                        
-                        <p class="text-gray-600">
-                            📍 Nairobi, Kenya • 4+ years experience
-                        </p>
-                        <p class="text-sm text-gray-500 mt-2">
-                            Currently: AccessWASH, Schoolyard Ventures
-                        </p>
-                    </div>
-                    
-                    <!-- NOW Section -->
-                    <section id="now" class="mb-20 fade-on-scroll">
-                        <div class="border-l-4 border-about-primary pl-6 mb-8">
-                            <h2 class="section-header text-about-primary">NOW</h2>
-                            <p class="text-gray-600">What I'm focused on right now (Updated November 2025)</p>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            {% if now_items %}
-                                {% for item in now_items %}
-                                <div class="bg-white rounded-xl p-8 shadow-sm border-2 border-gray-100 hover:border-about-accent transition-colors duration-300">
-                                    <div class="flex items-start gap-4">
-                                        <span class="text-4xl flex-shrink-0">{{ item.icon }}</span>
-                                        <div class="flex-1">
-                                            <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                                                {{ item.title|upper }}
-                                            </h3>
-                                            <p class="text-gray-700 leading-relaxed mb-4">
-                                                {{ item.description }}
-                                            </p>
-                                            {% if item.link %}
-                                            <a href="{{ item.link }}" class="text-about-accent hover:text-about-primary font-medium transition-colors">
-                                                → Learn more
-                                            </a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            {% else %}
-                                <!-- Default Now Items -->
-                                <div class="bg-white rounded-xl p-8 shadow-sm border-2 border-gray-100">
-                                    <div class="flex items-start gap-4">
-                                        <span class="text-4xl">🚀</span>
-                                        <div>
-                                            <h3 class="text-xl font-semibold text-gray-900 mb-3">LEADING ACCESSWASH</h3>
-                                            <p class="text-gray-700 leading-relaxed mb-4">
-                                                Building a B2B enterprise suite for water operators across 13 utilities in Kenya. 
-                                                Leading a team of 4 engineers and managing multi-stakeholder partnerships.
-                                            </p>
-                                            <a href="https://www.accesswash.org" target="_blank" class="text-about-accent hover:text-about-primary font-medium transition-colors">
-                                                → Visit AccessWASH
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white rounded-xl p-8 shadow-sm border-2 border-gray-100">
-                                    <div class="flex items-start gap-4">
-                                        <span class="text-4xl">🎓</span>
-                                        <div>
-                                            <h3 class="text-xl font-semibold text-gray-900 mb-3">MENTORING AT SCHOOLYARD VENTURES</h3>
-                                            <p class="text-gray-700 leading-relaxed">
-                                                Facilitating social innovation curricula for high school students. Achieved 99% 
-                                                completion rates and 90% engagement increase across 3 cohorts.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-white rounded-xl p-8 shadow-sm border-2 border-gray-100">
-                                    <div class="flex items-start gap-4">
-                                        <span class="text-4xl">💡</span>
-                                        <div>
-                                            <h3 class="text-xl font-semibold text-gray-900 mb-3">APPLYING TO CHARITY ENTREPRENEURSHIP</h3>
-                                            <p class="text-gray-700 leading-relaxed">
-                                                Preparing to launch my next high-impact venture through the CE incubation program. 
-                                                Excited about evidence-based interventions in global health.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                            
-                            <!-- Personal Updates -->
-                            <div class="bg-gray-50 rounded-lg p-6">
-                                <p class="text-sm text-gray-600 space-y-2">
-                                    <span class="block">📖 Reading: The Scout Mindset by Julia Galef</span>
-                                    <span class="block">🎧 Listening: 80,000 Hours Podcast</span>
-                                    <span class="block">🏃 Training: Half-marathon prep</span>
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- RECENTLY Section -->
-                    <section id="recently" class="mb-20 fade-on-scroll">
-                        <div class="border-l-4 border-about-primary pl-6 mb-8">
-                            <h2 class="section-header text-about-primary">RECENTLY</h2>
-                            <p class="text-gray-600">Major milestones from the past 24 months</p>
-                        </div>
-                        
-                        <div class="relative pl-8 border-l-2 border-about-primary space-y-8">
-                            <!-- Timeline Items -->
-                            <div class="relative">
-                                <div class="absolute -left-[2.4rem] top-0 timeline-dot"></div>
-                                <div class="bg-white rounded-lg p-6 shadow-sm">
-                                    <p class="text-sm font-semibold text-about-primary mb-1">November 2025</p>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Interviewed for Charity Entrepreneurship
-                                    </h3>
-                                    <p class="text-gray-600 text-sm">
-                                        Applied to CE incubation program to launch evidence-based interventions
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="relative">
-                                <div class="absolute -left-[2.4rem] top-0 timeline-dot"></div>
-                                <div class="bg-white rounded-lg p-6 shadow-sm">
-                                    <p class="text-sm font-semibold text-about-primary mb-1">March 2023</p>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Joined AccessWASH as Technical & Programme Lead
-                                    </h3>
-                                    <p class="text-gray-600 text-sm">
-                                        Started leading product and engineering for water utility digitization
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="relative">
-                                <div class="absolute -left-[2.4rem] top-0 timeline-dot"></div>
-                                <div class="bg-white rounded-lg p-6 shadow-sm">
-                                    <p class="text-sm font-semibold text-about-primary mb-1">January 2023</p>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Completed ILINAF Research Fellowship
-                                    </h3>
-                                    <p class="text-gray-600 text-sm">
-                                        Finished research analyzing 45 water utilities, contributed to national policy
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div class="relative">
-                                <div class="absolute -left-[2.4rem] top-0 timeline-dot"></div>
-                                <div class="bg-white rounded-lg p-6 shadow-sm">
-                                    <p class="text-sm font-semibold text-about-primary mb-1">November 2022</p>
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Started consulting with Schoolyard Ventures
-                                    </h3>
-                                    <p class="text-gray-600 text-sm">
-                                        Began facilitating social innovation education for high school students
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- PREVIOUSLY Section -->
-                    <section id="previously" class="mb-20 fade-on-scroll">
-                        <div class="border-l-4 border-about-primary pl-6 mb-8">
-                            <h2 class="section-header text-about-primary">PREVIOUSLY</h2>
-                            <p class="text-gray-600">Key experiences that shaped my journey</p>
-                        </div>
-                        
-                        <div class="space-y-8">
-                            <!-- Flux Water -->
-                            <div class="experience-card">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-gray-900 mb-1">Flux Water LTD</h3>
-                                        <p class="text-lg text-about-primary font-medium">Founder & Software Engineer</p>
-                                        <p class="text-sm text-gray-600">August 2019 - March 2023 • Nairobi, Kenya</p>
-                                    </div>
-                                </div>
-                                
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Founded and scaled a B2B SaaS platform revolutionizing water utility operations 
-                                    across Africa through data analytics and workflow automation.
-                                </p>
-                                
-                                <div class="mb-4">
-                                    <p class="font-semibold text-gray-900 mb-2">KEY ACHIEVEMENTS:</p>
-                                    <ul class="space-y-2 text-sm text-gray-700">
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Secured $50,000+ in seed funding through competitive grants (Cisco Global Problem Solver Challenge, Social Shifters)</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Built Kenya's largest water utility dataset (30M+ data points)</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Achieved 90% reduction in field operation costs for partner utilities</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Earned UN recognition for public health impact during pandemic</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Scaled engineering team from 1 to 5 members, doubled MRR</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    <span class="text-xs bg-gray-100 px-3 py-1 rounded-full font-mono">Python</span>
-                                    <span class="text-xs bg-gray-100 px-3 py-1 rounded-full font-mono">Django</span>
-                                    <span class="text-xs bg-gray-100 px-3 py-1 rounded-full font-mono">PostgreSQL</span>
-                                    <span class="text-xs bg-gray-100 px-3 py-1 rounded-full font-mono">React</span>
-                                    <span class="text-xs bg-gray-100 px-3 py-1 rounded-full font-mono">Mobile Dev</span>
-                                </div>
-                            </div>
-                            
-                            <!-- CPI -->
-                            <div class="experience-card">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-gray-900 mb-1">Committed Personnel, Inc.</h3>
-                                        <p class="text-lg text-about-primary font-medium">Technical Product Manager</p>
-                                        <p class="text-sm text-gray-600">June 2022 - December 2022 • Birmingham, AL, USA</p>
-                                    </div>
-                                </div>
-                                
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Led product development for workforce management solutions serving 1000+ gig workers 
-                                    across Southern US states.
-                                </p>
-                                
-                                <div class="mb-4">
-                                    <p class="font-semibold text-gray-900 mb-2">KEY ACHIEVEMENTS:</p>
-                                    <ul class="space-y-2 text-sm text-gray-700">
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Shipped automated onboarding MVP in 4 months, reducing manual processes by 50%</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Built performance analytics dashboard improving conversion efficiency by 35%</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Interviewed 50+ technical candidates for recruiting team</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                            <!-- ILINAF -->
-                            <div class="experience-card">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-gray-900 mb-1">ILINAF Foundation</h3>
-                                        <p class="text-lg text-about-primary font-medium">Research Fellow</p>
-                                        <p class="text-sm text-gray-600">August 2022 - January 2023 • Nairobi, Kenya</p>
-                                    </div>
-                                </div>
-                                
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Conducted applied research on cost-effectiveness benchmarks for water utilities 
-                                    in Sub-Saharan Africa.
-                                </p>
-                                
-                                <div class="mb-4">
-                                    <p class="font-semibold text-gray-900 mb-2">KEY ACHIEVEMENTS:</p>
-                                    <ul class="space-y-2 text-sm text-gray-700">
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Secured $5,000 research grant for full-time research work</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>Analyzed 100,000+ data points across 45 water utilities</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>2 recommendations adopted into Kenya's national water sector strategy</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                            <!-- Schoolyard Ventures -->
-                            <div class="experience-card">
-                                <div class="flex items-start justify-between mb-4">
-                                    <div>
-                                        <h3 class="text-2xl font-semibold text-gray-900 mb-1">Schoolyard Ventures</h3>
-                                        <p class="text-lg text-about-primary font-medium">Social Innovation Program Consultant</p>
-                                        <p class="text-sm text-gray-600">November 2022 - Present • Remote, Philadelphia, PA</p>
-                                    </div>
-                                </div>
-                                
-                                <p class="text-gray-700 leading-relaxed mb-4">
-                                    Co-design and facilitate entrepreneurship education for high school students.
-                                </p>
-                                
-                                <div class="mb-4">
-                                    <p class="font-semibold text-gray-900 mb-2">KEY ACHIEVEMENTS:</p>
-                                    <ul class="space-y-2 text-sm text-gray-700">
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>99% completion rate across 3 cohorts (45+ students)</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>90% increase in student engagement through inclusive program design</span>
-                                        </li>
-                                        <li class="flex items-start">
-                                            <span class="text-about-accent mr-2">•</span>
-                                            <span>95% satisfaction rate from final pitch showcases</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- RESUME Section -->
-                    <section id="resume" class="mb-20 fade-on-scroll">
-                        <div class="border-l-4 border-about-primary pl-6 mb-8">
-                            <h2 class="section-header text-about-primary">RESUME</h2>
-                            <p class="text-gray-600">Skills, education, and recognition</p>
-                        </div>
-                        
-                        <!-- Download Button -->
-                        <div class="mb-8">
-                            <a href="{% static 'documents/ken_ruto_resume.pdf' %}" download class="inline-flex items-center justify-center bg-about-primary text-white px-8 py-4 rounded-full font-semibold hover:bg-about-accent transition-all duration-200 hover:shadow-lg">
-                                📄 Download PDF Resume
-                            </a>
-                        </div>
-                        
-                        <!-- Skills Section -->
-                        <div class="mb-12">
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-6">Core Skills</h3>
-                            
-                            <div class="space-y-6">
-                                <div>
-                                    <h4 class="font-semibold text-about-primary mb-3">Technical Product Management</h4>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="skill-pill">Product Lifecycle</span>
-                                        <span class="skill-pill">Roadmapping</span>
-                                        <span class="skill-pill">Agile/Scrum</span>
-                                        <span class="skill-pill">Stakeholder Management</span>
-                                        <span class="skill-pill">Go-to-Market</span>
-                                        <span class="skill-pill">User Research</span>
-                                        <span class="skill-pill">A/B Testing</span>
-                                        <span class="skill-pill">API Design</span>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h4 class="font-semibold text-about-primary mb-3">Engineering & Data</h4>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="skill-pill">Python</span>
-                                        <span class="skill-pill">Machine Learning</span>
-                                        <span class="skill-pill">SQL</span>
-                                        <span class="skill-pill">Data Visualization</span>
-                                        <span class="skill-pill">Mobile Development</span>
-                                        <span class="skill-pill">Predictive Modeling</span>
-                                        <span class="skill-pill">UI/UX</span>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h4 class="font-semibold text-about-primary mb-3">Leadership</h4>
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="skill-pill">Cross-functional Teams</span>
-                                        <span class="skill-pill">0-to-1 Development</span>
-                                        <span class="skill-pill">Partnerships</span>
-                                        <span class="skill-pill">Grant Acquisition</span>
-                                        <span class="skill-pill">Enterprise B2B Sales</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Education -->
-                        <div class="mb-12">
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-6">Education</h3>
-                            <div class="bg-white rounded-xl p-6 shadow-sm border-2 border-gray-100">
-                                <h4 class="text-xl font-semibold text-gray-900 mb-2">Bachelor of Science, Computer Science</h4>
-                                <p class="text-about-primary font-medium mb-2">Haverford College</p>
-                                <p class="text-sm text-gray-600 mb-4">Haverford, Pennsylvania, USA</p>
-                                
-                                <div class="mb-3">
-                                    <p class="font-semibold text-gray-700 text-sm mb-2">Scholarship Awards:</p>
-                                    <ul class="space-y-1 text-sm text-gray-600">
-                                        <li>• William P. Jeffcock Scholar</li>
-                                        <li>• Bruce D. Gorchow Scholar</li>
-                                        <li>• Sondra Lee Spar International Scholar</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Awards -->
-                        <div>
-                            <h3 class="text-2xl font-semibold text-gray-900 mb-6">Awards & Recognition</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-gray-900 mb-1">🏆 UN Best Innovation Award, 2020</p>
-                                    <p class="text-sm text-gray-600">Global Handwashing Day</p>
-                                </div>
-                                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-gray-900 mb-1">🏆 Social Shifters 2021</p>
-                                    <p class="text-sm text-gray-600">STEM Global Winner</p>
-                                </div>
-                                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-gray-900 mb-1">🏆 Cisco Global Problem Solver</p>
-                                    <p class="text-sm text-gray-600">Challenge Winner</p>
-                                </div>
-                                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-gray-900 mb-1">🎓 Haverford Innovation Fellow</p>
-                                    <p class="text-sm text-gray-600">2018, 2022</p>
-                                </div>
-                                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-gray-900 mb-1">🎓 CPGC Fellow</p>
-                                    <p class="text-sm text-gray-600">Center for Peace & Global Citizenship, 2019</p>
-                                </div>
-                                <div class="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-                                    <p class="font-semibold text-gray-900 mb-1">🎓 ILINAF Research Fellow</p>
-                                    <p class="text-sm text-gray-600">Initiative for Longtermism in Africa, 2022</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    
-                    <!-- CTA Section -->
-                    <section class="bg-about-primary text-white rounded-2xl p-12 text-center fade-on-scroll">
-                        <h2 class="text-3xl font-bold mb-4">Let's Work Together</h2>
-                        <p class="text-lg mb-8 text-white/90">
-                            Interested in collaborating on high-impact projects, social entrepreneurship, or research?
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="mailto:kkimtai@gmail.com" class="bg-white text-about-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                                Send me an email
-                            </a>
-                            <a href="https://calendly.com/kenruto" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-about-primary transition-colors">
-                                Schedule a call
-                            </a>
-                        </div>
-                    </section>
-                </main>
+                <!-- Experience 2 -->
+                <div class="prose-custom">
+                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
+                        Founding Engineer at StartupXYZ
+                    </h3>
+                    <p class="text-sm text-neutral-600 mb-3">2020 - 2022 • Remote</p>
+                    <ul class="space-y-2 text-neutral-700">
+                        <li>Built MVP and scaled to $1M ARR as first technical hire</li>
+                        <li>Designed and implemented core platform architecture (Django, React, PostgreSQL)</li>
+                        <li>Established engineering practices and hired team of 5 engineers</li>
+                    </ul>
+                </div>
+                
+                <!-- Experience 3 -->
+                <div class="prose-custom">
+                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
+                        Software Engineer at BigTech
+                    </h3>
+                    <p class="text-sm text-neutral-600 mb-3">2018 - 2020 • Seattle</p>
+                    <ul class="space-y-2 text-neutral-700">
+                        <li>Contributed to internal tools used by 10k+ employees</li>
+                        <li>Optimized query performance reducing latency by 60%</li>
+                        <li>Mentored junior engineers and led code reviews</li>
+                    </ul>
+                </div>
+                
+                <!-- Education -->
+                <div class="prose-custom">
+                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
+                        B.S. Computer Science
+                    </h3>
+                    <p class="text-sm text-neutral-600 mb-3">University of Nairobi • 2014 - 2018</p>
+                    <p class="text-neutral-700">
+                        Focused on machine learning, distributed systems, and human-computer interaction.
+                    </p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+        
+        <!-- Other Section (Interests) -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Other</h2>
+            
+            <div class="prose-custom space-y-4">
+                <div>
+                    <strong class="text-neutral-900">Hobbies:</strong>
+                    <span class="text-neutral-700"> Running (training for my first marathon), reading (sci-fi and non-fiction), photography, and cooking (recommendations welcome!)</span>
+                </div>
+                
+                <div>
+                    <strong class="text-neutral-900">Currently reading:</strong>
+                    <span class="text-neutral-700"> "The Creative Act" by Rick Rubin, "Working in Public" by Nadia Eghbal</span>
+                </div>
+                
+                <div>
+                    <strong class="text-neutral-900">Favorite tools:</strong>
+                    <span class="text-neutral-700"> VS Code, Linear, Notion, Figma, Claude</span>
+                </div>
+                
+                <div>
+                    <strong class="text-neutral-900">Coffee order:</strong>
+                    <span class="text-neutral-700"> Flat white, oat milk, no sugar</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Links About Me -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Links About Me</h2>
+            
+            <div class="prose-custom">
+                <ul class="space-y-3">
+                    <li>
+                        <a href="https://techcrunch.com/article" target="_blank" rel="noopener noreferrer">
+                            TechCrunch: Startup Raises $2M
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@kenruto" target="_blank" rel="noopener noreferrer">
+                            Medium: My Essays on Product & Technology
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://podcast.com/episode" target="_blank" rel="noopener noreferrer">
+                            Podcast: Building Products in Africa
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/kenruto" target="_blank" rel="noopener noreferrer">
+                            GitHub: Open Source Projects
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Skills Section (Optional) -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">What I Work With</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium text-neutral-900 mb-3">Product & Design</h3>
+                    <p class="text-neutral-700 text-sm">
+                        User research, product strategy, roadmapping, wireframing, prototyping, analytics, A/B testing
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium text-neutral-900 mb-3">Engineering</h3>
+                    <p class="text-neutral-700 text-sm">
+                        Python, JavaScript, React, Django, PostgreSQL, AWS, Git, REST APIs, GraphQL
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium text-neutral-900 mb-3">AI & Data</h3>
+                    <p class="text-neutral-700 text-sm">
+                        Prompt engineering, LLM integration, data analysis, SQL, basic ML concepts
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-medium text-neutral-900 mb-3">Soft Skills</h3>
+                    <p class="text-neutral-700 text-sm">
+                        Technical writing, cross-functional leadership, stakeholder management, public speaking
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA -->
+        <section class="bg-neutral-100 rounded-2xl p-8 text-center">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-4">Let's Connect</h2>
+            <p class="text-neutral-700 mb-6">
+                I'm always interested in meeting people building interesting things.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="mailto:hello@kenruto.com" class="btn btn-primary">
+                    Send me an email
+                </a>
+                <a href="https://twitter.com/kenruto" target="_blank" class="btn btn-secondary">
+                    Follow on Twitter
+                </a>
+            </div>
+        </section>
+        
+    </div>
 </div>
+
 {% endblock %}

@@ -1,90 +1,290 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Small Bets - Ken Ruto{% endblock %}
-
-{% block body_class %}bg-bets-bg text-bets-text{% endblock %}
+{% block title %}Projects - Ken Ruto{% endblock %}
 
 {% block content %}
-<div class="page-transition min-h-screen">
-    <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-        <div class="container mx-auto max-w-4xl">
-            <div class="text-center mb-16">
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold font-mono text-bets-text mb-6 animate-fade-in">
-                    SMALL BETS
-                </h1>
-                <p class="text-xl sm:text-2xl text-bets-text/80 mb-8">
-                    Experiments • Side Projects • Things I Ship
-                </p>
-                <p class="text-lg text-bets-secondary italic">
-                    "Most things fail. Ship anyway."
-                </p>
+
+<!-- 
+    PROJECTS PAGE - Small Bets Portfolio
+    ====================================
+    
+    Showcase of side projects, experiments, and small bets.
+    Clean grid layout with project cards.
+-->
+
+<div class="page-transition pt-32 pb-20">
+    <div class="container-custom max-w-4xl">
+        
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-neutral-500 mb-8">
+            <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
+            <span class="mx-2">></span>
+            <span class="text-neutral-900">Projects</span>
+        </nav>
+        
+        <!-- Page Header -->
+        <header class="mb-16">
+            <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-6">
+                Projects
+            </h1>
+            <p class="text-lg text-neutral-700 max-w-2xl mb-4">
+                Side projects, experiments, and small bets I've shipped. Some succeed, most don't, all teach me something.
+            </p>
+            <p class="text-neutral-600">
+                Philosophy: Ship fast, learn faster, repeat.
+            </p>
+        </header>
+        
+        <!-- Filter/Category Tabs (Optional with Alpine.js) -->
+        <div 
+            x-data="{ activeCategory: 'all' }"
+            class="mb-12"
+        >
+            <!-- Category Buttons -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <button 
+                    @click="activeCategory = 'all'"
+                    :class="activeCategory === 'all' ? 'bg-accent text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                >
+                    All
+                </button>
+                <button 
+                    @click="activeCategory = 'saas'"
+                    :class="activeCategory === 'saas' ? 'bg-accent text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                >
+                    SaaS
+                </button>
+                <button 
+                    @click="activeCategory = 'tools'"
+                    :class="activeCategory === 'tools' ? 'bg-accent text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                >
+                    Tools
+                </button>
+                <button 
+                    @click="activeCategory = 'experiments'"
+                    :class="activeCategory === 'experiments' ? 'bg-accent text-white' : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'"
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+                >
+                    Experiments
+                </button>
             </div>
             
-            <!-- Terminal-style Output -->
-            <div class="bg-black/50 rounded-2xl p-8 mb-16 border-2 border-bets-primary/30 font-mono text-sm">
-                <div class="flex items-center gap-2 mb-4 text-bets-text/60">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span class="ml-2">kenruto@portfolio:~/projects$</span>
+            <!-- Projects Grid -->
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div 
+                    x-show="activeCategory === 'all' || activeCategory === 'saas'"
+                    x-transition
+                    class="card group"
+                >
+                    <div class="mb-4">
+                        <span class="inline-block bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">
+                            Live
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-medium text-neutral-900 mb-3 group-hover:text-accent transition-colors">
+                        ProductFlow
+                    </h2>
+                    <p class="text-neutral-600 mb-4">
+                        AI-powered product roadmap tool for indie makers. Built in 2 weeks, $200 MRR in month 1.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Next.js</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">OpenAI</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Stripe</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-accent hover:text-accent-dark text-sm font-medium">
+                            Visit →
+                        </a>
+                        <a href="#" class="text-neutral-600 hover:text-neutral-900 text-sm">
+                            Case Study
+                        </a>
+                    </div>
                 </div>
-                <div class="space-y-2 text-bets-text">
-                    <p class="text-bets-secondary">$ ./ship_experiments.sh</p>
-                    <p class="text-bets-text/80">> Loading projects...</p>
-                    <p class="text-bets-text/80">> Checking status...</p>
-                    <p class="text-bets-accent">> <span class="animate-pulse">█</span></p>
+                
+                <!-- Project Card 2 -->
+                <div 
+                    x-show="activeCategory === 'all' || activeCategory === 'tools'"
+                    x-transition
+                    class="card group"
+                >
+                    <div class="mb-4">
+                        <span class="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full">
+                            Open Source
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-medium text-neutral-900 mb-3 group-hover:text-accent transition-colors">
+                        Django Starter Kit
+                    </h2>
+                    <p class="text-neutral-600 mb-4">
+                        Opinionated Django boilerplate with auth, payments, and email. 500+ GitHub stars.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Django</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Tailwind</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Alpine.js</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-accent hover:text-accent-dark text-sm font-medium">
+                            GitHub →
+                        </a>
+                        <a href="#" class="text-neutral-600 hover:text-neutral-900 text-sm">
+                            Documentation
+                        </a>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="max-w-2xl mx-auto space-y-6 text-lg leading-relaxed text-bets-text/90 text-center mb-12">
-                <h2 class="text-3xl font-bold text-bets-accent mb-6">UNDER CONSTRUCTION</h2>
-                <p>
-                    I ship things. Some work. Most don't. All teach me something.
-                </p>
-                <p>
-                    This is my lab—side projects, SaaS experiments, tools I build to scratch my own itch. 
-                    If even one other person finds them useful, that's a win.
-                </p>
-                <p>
-                    I'm currently documenting my experiments. Check back soon to see what I'm building.
-                </p>
-                <p class="text-bets-secondary font-semibold">
-                    Philosophy: Ship fast, learn faster, repeat.
-                </p>
-            </div>
-            
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <a href="{% url 'about' %}" class="bg-bets-primary hover:bg-bets-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
-                    → See my professional work
-                </a>
-                <a href="{% url 'kiota' %}" class="border-2 border-bets-secondary text-bets-secondary hover:bg-bets-secondary hover:text-white px-8 py-3 rounded-full font-semibold transition-colors text-center">
-                    → Read about building
-                </a>
-            </div>
-            
-            <!-- Newsletter -->
-            <div class="bg-black/30 rounded-2xl p-8 border-2 border-bets-primary/30 text-center">
-                <h3 class="text-2xl font-bold text-bets-text mb-4">Stay Updated</h3>
-                <p class="text-bets-text/80 mb-6">
-                    Want to follow along as I build? Get notified when projects launch.
-                </p>
-                <form method="POST" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                    {% csrf_token %}
-                    <input 
-                        type="email" 
-                        name="email" 
-                        placeholder="your@email.com" 
-                        required
-                        class="flex-1 px-6 py-3 rounded-full bg-white/10 border-2 border-bets-primary/30 text-bets-text placeholder-bets-text/50 focus:border-bets-primary focus:outline-none focus:ring-4 focus:ring-bets-primary/20 font-mono"
-                    >
-                    <button type="submit" class="bg-bets-primary hover:bg-bets-primary/90 text-white px-8 py-3 rounded-full font-semibold transition-colors whitespace-nowrap">
-                        Subscribe
-                    </button>
-                </form>
+                
+                <!-- Project Card 3 -->
+                <div 
+                    x-show="activeCategory === 'all' || activeCategory === 'experiments'"
+                    x-transition
+                    class="card group"
+                >
+                    <div class="mb-4">
+                        <span class="inline-block bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-full">
+                            Archived
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-medium text-neutral-900 mb-3 group-hover:text-accent transition-colors">
+                        TweetInsights
+                    </h2>
+                    <p class="text-neutral-600 mb-4">
+                        Twitter analytics tool. Shut down after 3 months - learned about API costs the hard way.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">React</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Twitter API</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-neutral-600 hover:text-neutral-900 text-sm">
+                            Post-mortem
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project Card 4 -->
+                <div 
+                    x-show="activeCategory === 'all' || activeCategory === 'saas'"
+                    x-transition
+                    class="card group"
+                >
+                    <div class="mb-4">
+                        <span class="inline-block bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">
+                            Building
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-medium text-neutral-900 mb-3 group-hover:text-accent transition-colors">
+                        EmailCraft
+                    </h2>
+                    <p class="text-neutral-600 mb-4">
+                        AI email writer for founders. Currently in beta with 50 users. Aiming for $1k MRR.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Python</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">GPT-4</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">FastAPI</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-accent hover:text-accent-dark text-sm font-medium">
+                            Join Beta →
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project Card 5 -->
+                <div 
+                    x-show="activeCategory === 'all' || activeCategory === 'tools'"
+                    x-transition
+                    class="card group"
+                >
+                    <div class="mb-4">
+                        <span class="inline-block bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">
+                            Live
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-medium text-neutral-900 mb-3 group-hover:text-accent transition-colors">
+                        Color Palette Generator
+                    </h2>
+                    <p class="text-neutral-600 mb-4">
+                        Simple tool for designers. Built in a weekend, gets 10k visitors/month. Zero revenue.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Vanilla JS</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">CSS</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-accent hover:text-accent-dark text-sm font-medium">
+                            Try it →
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Project Card 6 -->
+                <div 
+                    x-show="activeCategory === 'all' || activeCategory === 'experiments'"
+                    x-transition
+                    class="card group"
+                >
+                    <div class="mb-4">
+                        <span class="inline-block bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full">
+                            Failed
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-medium text-neutral-900 mb-3 group-hover:text-accent transition-colors">
+                        SocialScheduler
+                    </h2>
+                    <p class="text-neutral-600 mb-4">
+                        Social media scheduler. Too crowded market, couldn't differentiate. Learned about positioning.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Django</span>
+                        <span class="bg-neutral-100 text-neutral-700 text-xs px-2 py-1 rounded">Celery</span>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="text-neutral-600 hover:text-neutral-900 text-sm">
+                            What I learned
+                        </a>
+                    </div>
+                </div>
+                
             </div>
         </div>
-    </section>
+        
+        <!-- Stats Section (Optional) -->
+        <section class="mt-20 bg-neutral-100 rounded-2xl p-12">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-8 text-center">By The Numbers</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <div class="text-4xl font-medium text-accent mb-2">12</div>
+                    <div class="text-sm text-neutral-600">Projects Shipped</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-medium text-accent mb-2">$2.5k</div>
+                    <div class="text-sm text-neutral-600">MRR Generated</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-medium text-accent mb-2">50k+</div>
+                    <div class="text-sm text-neutral-600">Total Users</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-medium text-accent mb-2">∞</div>
+                    <div class="text-sm text-neutral-600">Lessons Learned</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter CTA -->
+        <div class="mt-20">
+            {% include 'components/newsletter.html' with newsletter_title="Follow My Journey" newsletter_description="Get updates when I ship new projects and share what I'm learning." %}
+        </div>
+        
+    </div>
 </div>
+
 {% endblock %}

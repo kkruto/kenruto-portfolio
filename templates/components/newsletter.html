@@ -1,34 +1,159 @@
-<section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Stay Connected</h2>
-            <p class="text-lg text-gray-600 mb-8">
-                Get occasional updates on what I'm building, creating, and thinking about
-            </p>
+{% load static %}
+
+<!-- 
+    NEWSLETTER COMPONENT WITH ALPINE.JS
+    ====================================
+    
+    This component demonstrates:
+    1. Form state management with Alpine.js
+    2. Input validation
+    3. Loading states
+    4. Success/error handling
+-->
+
+<div 
+    x-data="{
+        email: '',
+        loading: false,
+        message: '',
+        messageType: '',
+        
+        // Validate email format
+        isValidEmail() {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(this.email);
+        },
+        
+        // Handle form submission
+        async submitForm() {
+            // Reset message
+            this.message = '';
             
-            <form method="POST" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" x-data="newsletterForm">
-                {% csrf_token %}
-                <input 
-                    type="email" 
-                    name="email" 
-                    x-model="email"
-                    placeholder="Enter your email" 
-                    required
-                    class="flex-1 px-6 py-3 rounded-full border-2 border-gray-300 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/20 transition-all duration-200"
-                >
-                <button 
-                    type="submit" 
-                    class="btn-primary whitespace-nowrap"
-                    :disabled="loading"
-                    :class="{ 'opacity-50 cursor-not-allowed': loading }">
-                    <span x-show="!loading">Subscribe</span>
-                    <span x-show="loading">Subscribing...</span>
-                </button>
-            </form>
+            // Validate email
+            if (!this.isValidEmail()) {
+                this.message = 'Please enter a valid email address';
+                this.messageType = 'error';
+                return;
+            }
             
-            <p class="text-sm text-gray-500 mt-4">
-                No spam. Unsubscribe anytime.
-            </p>
-        </div>
+            // Set loading state
+            this.loading = true;
+            
+            // Form will submit normally to Django
+            // The loading state will show during submission
+        }
+    }"
+    class="bg-neutral-100 rounded-2xl p-8 md:p-12"
+>
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h3 class="text-2xl font-medium text-neutral-900 mb-3">
+            {% block newsletter_title %}Stay Updated{% endblock %}
+        </h3>
+        <p class="text-neutral-600">
+            {% block newsletter_description %}
+            Get notified when I publish new essays, projects, and experiments.
+            {% endblock %}
+        </p>
     </div>
-</section>
+    
+    <!-- Form -->
+    <form 
+        method="POST" 
+        action="{% url 'newsletter_subscribe' %}"
+        @submit.prevent="submitForm(); $el.submit()"
+        class="max-w-md mx-auto"
+    >
+        {% csrf_token %}
+        
+        <div class="flex flex-col sm:flex-row gap-3">
+            <!-- Email Input -->
+            <!-- 
+                x-model: Two-way data binding
+                - Updates 'email' variable as you type
+                - Like React's controlled components
+            -->
+            <input 
+                type="email" 
+                name="email"
+                x-model="email"
+                placeholder="your@email.com" 
+                required
+                :disabled="loading"
+                class="flex-1 px-6 py-3 rounded-full bg-white border-2 border-neutral-200 text-neutral-900 placeholder-neutral-400 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+            
+            <!-- Submit Button -->
+            <!-- 
+                :disabled: Dynamically disable during loading
+                x-text: Dynamically change button text
+            -->
+            <button 
+                type="submit"
+                :disabled="loading"
+                class="bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-full font-medium transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                <!-- Show "Subscribing..." when loading, otherwise "Subscribe" -->
+                <span x-show="!loading">Subscribe</span>
+                <span x-show="loading" class="flex items-center">
+                    <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Subscribing...
+                </span>
+            </button>
+        </div>
+        
+        <!-- Inline Message -->
+        <!-- 
+            x-show: Only show when message exists
+            x-transition: Smooth fade in/out
+            :class: Dynamically change color based on messageType
+        -->
+        <div 
+            x-show="message" 
+            x-transition
+            class="mt-4 text-center text-sm"
+            :class="messageType === 'error' ? 'text-red-600' : 'text-green-600'"
+        >
+            <p x-text="message"></p>
+        </div>
+    </form>
+    
+    <!-- Fine Print -->
+    <p class="text-sm text-neutral-500 text-center mt-6">
+        {% block newsletter_fine_print %}
+        No spam, ever. Unsubscribe anytime with one click.
+        {% endblock %}
+    </p>
+</div>
+
+<!-- 
+    HOW THIS WORKS:
+    ===============
+    
+    1. x-data creates component state:
+       - email: stores the input value
+       - loading: tracks form submission state
+       - message: stores validation/error messages
+       - messageType: 'error' or 'success'
+    
+    2. x-model="email" creates two-way binding:
+       - When you type, 'email' updates automatically
+       - Like React's useState + onChange combined
+    
+    3. @submit.prevent prevents default form submission
+       - Runs our validation first
+       - Then manually submits with $el.submit()
+    
+    4. :disabled uses binding to disable during loading
+       - True when loading, false otherwise
+    
+    5. x-show conditionally displays elements
+       - Shows loading spinner when loading = true
+       - Shows message when message exists
+    
+    ALPINE.JS MAKES FORMS EASY!
+    No need for complex JavaScript or libraries.
+-->

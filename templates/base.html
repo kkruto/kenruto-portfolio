@@ -1,63 +1,81 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ken Ruto - Product Manager & Social Entrepreneur building technology for social impact in East Africa">
+    <meta name="description" content="Ken Ruto - Product Manager, Engineer, and Writer">
     <meta name="author" content="Ken Ruto">
     
-    <title>{% block title %}Ken Ruto - Product Manager & Social Entrepreneur{% endblock %}</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <title>{% block title %}Ken Ruto{% endblock %}</title>
     
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Alpine.js - Minimal JavaScript framework for interactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
-    {% block extra_css %}{% endblock %}
+    <!-- Custom JavaScript -->
+    <script src="{% static 'js/app.js' %}" defer></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    
+    {% block extra_head %}{% endblock %}
 </head>
-<body class="{% block body_class %}bg-white{% endblock %}">
-    <!-- Navigation -->
+
+<!-- 
+    ALPINE.JS EXPLANATION:
+    The body tag doesn't need x-data because we'll scope Alpine components
+    to specific sections that need interactivity (nav, forms, etc.)
+-->
+
+<body class="{% block body_class %}bg-neutral-50 text-neutral-800{% endblock %}">
+    
+    <!-- Navigation Component -->
     {% include 'components/nav.html' %}
     
-    <!-- Main Content -->
-    <main class="{% block main_class %}{% endblock %}">
-        <!-- Django Messages -->
-        {% if messages %}
-        <div class="fixed top-20 right-4 z-50 space-y-2" x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 5000)">
-            {% for message in messages %}
-            <div class="bg-white border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% else %}border-blue-500{% endif %} p-4 rounded shadow-lg max-w-md">
-                <div class="flex items-center justify-between">
-                    <p class="text-sm text-gray-800">{{ message }}</p>
-                    <button @click="show = false" class="ml-4 text-gray-400 hover:text-gray-600">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
+    <!-- Main Content Area -->
+    <main class="min-h-screen">
         {% block content %}{% endblock %}
     </main>
     
-    <!-- Footer -->
+    <!-- Footer Component -->
     {% include 'components/footer.html' %}
     
-    <!-- Alpine.js - MOVED TO BOTTOM -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-    
-    <!-- Custom JS -->
-    <script src="{% static 'js/app.js' %}"></script>
-    
-    {% block extra_js %}{% endblock %}
+    <!-- Django Messages (for form feedback) -->
+    {% if messages %}
+    <div class="fixed bottom-4 right-4 z-50 space-y-2">
+        {% for message in messages %}
+        <!-- 
+            ALPINE.JS: Using x-data to create a dismissible message component
+            - x-data initializes the component with 'show: true'
+            - x-show controls visibility
+            - x-transition adds smooth fade in/out
+            - @click toggles the 'show' variable
+        -->
+        <div 
+            x-data="{ show: true }" 
+            x-show="show" 
+            x-transition
+            class="bg-white border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% else %}border-blue-500{% endif %} rounded-lg shadow-lg p-4 max-w-sm"
+        >
+            <div class="flex items-start justify-between">
+                <p class="text-sm text-neutral-700">{{ message }}</p>
+                <button 
+                    @click="show = false" 
+                    class="ml-4 text-neutral-400 hover:text-neutral-600"
+                    aria-label="Close message"
+                >
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
 </body>
 </html>
