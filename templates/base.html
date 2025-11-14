@@ -77,6 +77,22 @@
     </div>
     {% endif %}
 
+    <!-- Scroll to Top Button -->
+    <button
+        x-data="{ show: false }"
+        @scroll.window="show = (window.pageYOffset > 300)"
+        x-show="show"
+        x-transition
+        @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        class="fixed bottom-8 right-8 bg-accent text-white p-3 rounded-full shadow-lg hover:bg-accent-dark active:scale-95 transition-all z-40"
+        aria-label="Scroll to top"
+        style="display: none;"
+    >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
     <!-- Contact Modal (available globally) -->
     {% include 'components/contact_modal.html' %}
 

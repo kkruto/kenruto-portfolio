@@ -58,7 +58,7 @@
             <!-- Experience Dropdown -->
             {% if experiences %}
             <div
-                x-data="{ open: false }"
+                x-data="{ open: true }"
                 class="bg-white rounded-xl border border-neutral-200 mb-4"
             >
                 <button
@@ -129,7 +129,7 @@
             <!-- Education Dropdown -->
             {% if education %}
             <div
-                x-data="{ open: false }"
+                x-data="{ open: true }"
                 class="bg-white rounded-xl border border-neutral-200 mb-4"
             >
                 <button
@@ -178,7 +178,7 @@
             <!-- Skills Dropdown -->
             {% if skills %}
             <div
-                x-data="{ open: false }"
+                x-data="{ open: true }"
                 class="bg-white rounded-xl border border-neutral-200"
             >
                 <button
@@ -224,16 +224,16 @@
                 Let's talk if you're building something weird, creative, or at the intersection of art and tech.
             </p>
             <div class="flex flex-wrap justify-center gap-2">
-                <button @click="$dispatch('open-contact-modal')" class="text-sm bg-accent hover:bg-accent-dark text-white px-4 py-1.5 rounded transition-colors">
+                <button @click="$dispatch('open-contact-modal')" class="text-sm bg-accent hover:bg-accent-dark active:scale-98 text-white px-4 py-1.5 rounded transition-all">
                     Get in Touch
                 </button>
-                <a href="https://twitter.com/kenruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
+                <a href="https://twitter.com/kenruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 active:scale-98 text-neutral-900 px-4 py-1.5 rounded transition-all">
                     Twitter
                 </a>
-                <a href="https://github.com/kkruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
+                <a href="https://github.com/kkruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 active:scale-98 text-neutral-900 px-4 py-1.5 rounded transition-all">
                     GitHub
                 </a>
-                <a href="https://linkedin.com/in/kennyruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
+                <a href="https://linkedin.com/in/kennyruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 active:scale-98 text-neutral-900 px-4 py-1.5 rounded transition-all">
                     LinkedIn
                 </a>
             </div>
