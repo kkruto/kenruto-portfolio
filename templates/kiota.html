@@ -35,97 +35,38 @@
         
         <!-- Articles List -->
         <div class="space-y-8">
-            
-            <!-- Article Entry -->
-            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
-                <a href="#" class="block no-underline">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                            My North Star
-                        </h2>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">Jun 7, 2025</time>
-                    </div>
-                    <p class="text-neutral-600 leading-relaxed">
-                        Reflections on finding direction in an age of infinite possibilities. How I think about goals, constraints, and the long game.
-                    </p>
-                </a>
-            </article>
-            
-            <!-- Article Entry -->
-            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
-                <a href="#" class="block no-underline">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                            Infinity (a thought experiment)
-                        </h2>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">Dec 10, 2024</time>
-                    </div>
-                    <p class="text-neutral-600 leading-relaxed">
-                        What happens when you can do anything? A meditation on constraints, creativity, and the paradox of choice.
-                    </p>
-                </a>
-            </article>
-            
-            <!-- Article Entry -->
-            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
-                <a href="#" class="block no-underline">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                            Building Products That Matter
-                        </h2>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">Nov 15, 2024</time>
-                    </div>
-                    <p class="text-neutral-600 leading-relaxed">
-                        Beyond features and metrics: how to build things people actually care about. Lessons from 5 years in product.
-                    </p>
-                </a>
-            </article>
-            
-            <!-- Article Entry -->
-            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
-                <a href="#" class="block no-underline">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                            The Small Bets Philosophy
-                        </h2>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">Oct 22, 2024</time>
-                    </div>
-                    <p class="text-neutral-600 leading-relaxed">
-                        Why I'm betting on shipping fast, learning faster, and building multiple revenue streams. Inspired by Daniel Vassallo and Pieter Levels.
-                    </p>
-                </a>
-            </article>
-            
-            <!-- Article Entry -->
-            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
-                <a href="#" class="block no-underline">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                            Learning to Write Code and Stories
-                        </h2>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">Sep 8, 2024</time>
-                    </div>
-                    <p class="text-neutral-600 leading-relaxed">
-                        The surprising overlap between software engineering and storytelling. Both require structure, empathy, and iteration.
-                    </p>
-                </a>
-            </article>
-            
-            <!-- Article Entry -->
-            <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
-                <a href="#" class="block no-underline">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                            From Nairobi to San Francisco
-                        </h2>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">Jul 30, 2024</time>
-                    </div>
-                    <p class="text-neutral-600 leading-relaxed">
-                        What I learned moving from one tech ecosystem to another. On culture, opportunity, and staying connected to your roots.
-                    </p>
-                </a>
-            </article>
-            
+
+            {% if articles %}
+                {% for article in articles %}
+                <!-- Article Entry -->
+                <article class="border-b border-neutral-200 pb-8 hover:border-neutral-300 transition-colors group">
+                    <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
+                        <div class="flex items-baseline justify-between gap-4 mb-2">
+                            <h2 class="text-xl font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                                {{ article.title }}
+                            </h2>
+                            <time class="text-sm text-neutral-500 whitespace-nowrap">
+                                {{ article.published_date|date:"M j, Y" }}
+                            </time>
+                        </div>
+                        <p class="text-neutral-600 leading-relaxed">
+                            {{ article.excerpt|truncatewords:30 }}
+                        </p>
+
+                        {% if article.read_time %}
+                        <div class="mt-2 text-sm text-neutral-500">
+                            {{ article.read_time }} min read
+                        </div>
+                        {% endif %}
+                    </a>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-12">
+                    <p class="text-neutral-600 text-lg">No essays yet. Check back soon!</p>
+                </div>
+            {% endif %}
+
         </div>
         
         <!-- Pagination (if needed) -->

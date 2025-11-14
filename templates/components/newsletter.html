@@ -43,14 +43,14 @@
             // The loading state will show during submission
         }
     }"
-    class="bg-neutral-100 rounded-2xl p-8 md:p-12"
+    class="bg-neutral-50 border border-neutral-200 rounded-xl p-6"
 >
     <!-- Header -->
-    <div class="text-center mb-8">
-        <h3 class="text-2xl font-medium text-neutral-900 mb-3">
+    <div class="text-center mb-4">
+        <h3 class="text-lg font-medium text-neutral-900 mb-1">
             {% block newsletter_title %}Stay Updated{% endblock %}
         </h3>
-        <p class="text-neutral-600">
+        <p class="text-sm text-neutral-600">
             {% block newsletter_description %}
             Get notified when I publish new essays, projects, and experiments.
             {% endblock %}
@@ -66,32 +66,32 @@
     >
         {% csrf_token %}
         
-        <div class="flex flex-col sm:flex-row gap-3">
+        <div class="flex flex-col sm:flex-row gap-2">
             <!-- Email Input -->
-            <!-- 
+            <!--
                 x-model: Two-way data binding
                 - Updates 'email' variable as you type
                 - Like React's controlled components
             -->
-            <input 
-                type="email" 
+            <input
+                type="email"
                 name="email"
                 x-model="email"
-                placeholder="your@email.com" 
+                placeholder="your@email.com"
                 required
                 :disabled="loading"
-                class="flex-1 px-6 py-3 rounded-full bg-white border-2 border-neutral-200 text-neutral-900 placeholder-neutral-400 focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="flex-1 px-4 py-2 rounded-lg bg-white border border-neutral-300 text-neutral-900 text-sm placeholder-neutral-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-            
+
             <!-- Submit Button -->
-            <!-- 
+            <!--
                 :disabled: Dynamically disable during loading
                 x-text: Dynamically change button text
             -->
-            <button 
+            <button
                 type="submit"
                 :disabled="loading"
-                class="bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-full font-medium transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                class="bg-accent hover:bg-accent-dark text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
             >
                 <!-- Show "Subscribing..." when loading, otherwise "Subscribe" -->
                 <span x-show="!loading">Subscribe</span>
@@ -106,25 +106,25 @@
         </div>
         
         <!-- Inline Message -->
-        <!-- 
+        <!--
             x-show: Only show when message exists
             x-transition: Smooth fade in/out
             :class: Dynamically change color based on messageType
         -->
-        <div 
-            x-show="message" 
+        <div
+            x-show="message"
             x-transition
-            class="mt-4 text-center text-sm"
+            class="mt-3 text-center text-xs"
             :class="messageType === 'error' ? 'text-red-600' : 'text-green-600'"
         >
             <p x-text="message"></p>
         </div>
     </form>
-    
+
     <!-- Fine Print -->
-    <p class="text-sm text-neutral-500 text-center mt-6">
+    <p class="text-xs text-neutral-500 text-center mt-3">
         {% block newsletter_fine_print %}
-        No spam, ever. Unsubscribe anytime with one click.
+        No spam, ever. Unsubscribe anytime.
         {% endblock %}
     </p>
 </div>
