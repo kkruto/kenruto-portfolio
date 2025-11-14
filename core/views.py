@@ -21,29 +21,24 @@ def home(request):
     """
     Enhanced homepage with:
     - What I'm Doing Now
-    - Recent Activities
-    - Featured/Recent Articles
-    - Previously (work experience)
+    - Recent Projects
+    - Recent Articles
+    - Work Experience
     """
     context = {
         # What I'm doing now
         'now_items': NowItem.objects.filter(is_active=True)[:3],
-        
-        # Recent activities
-        'recent_activities': RecentActivity.objects.filter(is_visible=True)[:5],
-        
-        # Featured or recent articles
-        'featured_articles': Article.objects.filter(
-            status='published',
-            is_featured=True
-        )[:3],
-        
+
+        # Recent projects
+        'recent_projects': Experience.objects.filter(type='project').order_by('-start_date')[:3],
+
+        # Recent articles
         'recent_articles': Article.objects.filter(
             status='published'
-        ).order_by('-published_date')[:6],
-        
-        # Previously (recent work experience)
-        'recent_experiences': Experience.objects.filter(type='work')[:3],
+        ).order_by('-published_date')[:4],
+
+        # Work experience
+        'recent_experiences': Experience.objects.filter(type='work').order_by('-start_date')[:3],
     }
     return render(request, 'home.html', context)
 

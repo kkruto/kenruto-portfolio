@@ -25,7 +25,7 @@
 
   /* Link defaults */
   a {
-    @apply text-accent underline decoration-1 underline-offset-4;
+    @apply text-accent no-underline;
     @apply transition-colors duration-200;
   }
 
