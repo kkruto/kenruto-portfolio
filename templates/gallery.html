@@ -52,7 +52,7 @@
                     this.currentImage = this.images[this.currentIndex];
                 }
             }"
-            x-init="images = {{ gallery_items|length > 0|yesno:'[' }}{% for item in gallery_items %}{ url: '{{ item.image.url }}', title: '{{ item.title|escapejs }}', description: '{{ item.description|escapejs }}' }{% if not forloop.last %},{% endif %}{% endfor %}{{ gallery_items|length > 0|yesno:'],' }}"
+            x-init="images = [{% for item in gallery_items %}{ url: '{{ item.image.url }}', title: '{{ item.title|escapejs }}', description: '{{ item.description|escapejs }}' }{% if not forloop.last %},{% endif %}{% endfor %}]"
             @keydown.escape.window="closeLightbox()"
             @keydown.arrow-right.window="lightboxOpen && nextImage()"
             @keydown.arrow-left.window="lightboxOpen && prevImage()"
