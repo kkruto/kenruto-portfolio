@@ -73,12 +73,26 @@
                 >
                     Essays
                 </a>
-                <a 
-                    href="{% url 'small_bets' %}" 
+                <a
+                    href="{% url 'small_bets' %}"
                     class="nav-link"
                     :class="currentPath.includes('/projects') ? 'active' : ''"
                 >
                     Projects
+                </a>
+                <a
+                    href="{% url 'gallery' %}"
+                    class="nav-link"
+                    :class="currentPath.includes('/gallery') ? 'active' : ''"
+                >
+                    Gallery
+                </a>
+                <a
+                    href="{% url 'resume' %}"
+                    class="nav-link"
+                    :class="currentPath.includes('/resume') ? 'active' : ''"
+                >
+                    Resume
                 </a>
             </div>
             
@@ -159,13 +173,29 @@
             >
                 Essays
             </a>
-            <a 
-                href="{% url 'small_bets' %}" 
+            <a
+                href="{% url 'small_bets' %}"
                 class="block px-4 py-3 rounded-lg nav-link"
                 :class="currentPath.includes('/projects') ? 'bg-neutral-100 active' : ''"
                 @click="mobileMenuOpen = false"
             >
                 Projects
+            </a>
+            <a
+                href="{% url 'gallery' %}"
+                class="block px-4 py-3 rounded-lg nav-link"
+                :class="currentPath.includes('/gallery') ? 'bg-neutral-100 active' : ''"
+                @click="mobileMenuOpen = false"
+            >
+                Gallery
+            </a>
+            <a
+                href="{% url 'resume' %}"
+                class="block px-4 py-3 rounded-lg nav-link"
+                :class="currentPath.includes('/resume') ? 'bg-neutral-100 active' : ''"
+                @click="mobileMenuOpen = false"
+            >
+                Resume
             </a>
         </div>
     </div>
