@@ -324,3 +324,20 @@ class Resume(models.Model):
         if self.is_active:
             Resume.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
         super().save(*args, **kwargs)
+
+
+class ContactMessage(models.Model):
+    """Contact form submissions"""
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False, help_text="Mark as read after reviewing")
+
+    class Meta:
+        ordering = ['-submitted_at']
+        verbose_name = "Contact Message"
+        verbose_name_plural = "Contact Messages"
+
+    def __str__(self):
+        return f"{self.name} ({self.email}) - {self.submitted_at.strftime('%Y-%m-%d')}"

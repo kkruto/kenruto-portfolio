@@ -3,14 +3,15 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import (
-    NewsletterSubscriber, 
-    Experience, 
-    NowItem, 
+    NewsletterSubscriber,
+    Experience,
+    NowItem,
     Skill,
     Article,
     GalleryItem,
     RecentActivity,
-    Resume
+    Resume,
+    ContactMessage
 )
 
 
@@ -291,6 +292,48 @@ class ResumeAdmin(admin.ModelAdmin):
         if obj.is_active:
             Resume.objects.exclude(pk=obj.pk).update(is_active=False)
         super().save_model(request, obj, form, change)
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'submitted_at', 'is_read', 'status_badge']
+    list_filter = ['is_read', 'submitted_at']
+    search_fields = ['name', 'email', 'message']
+    readonly_fields = ['name', 'email', 'message', 'submitted_at']
+    date_hierarchy = 'submitted_at'
+    actions = ['mark_as_read', 'mark_as_unread']
+
+    fieldsets = (
+        ('Contact Information', {
+            'fields': ('name', 'email', 'submitted_at')
+        }),
+        ('Message', {
+            'fields': ('message',)
+        }),
+        ('Status', {
+            'fields': ('is_read',)
+        }),
+    )
+
+    def status_badge(self, obj):
+        if obj.is_read:
+            return format_html(
+                '<span style="background-color: #10b981; color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500;">Read</span>'
+            )
+        return format_html(
+            '<span style="background-color: #2563eb; color: white; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500;">New</span>'
+        )
+    status_badge.short_description = 'Status'
+
+    def mark_as_read(self, request, queryset):
+        queryset.update(is_read=True)
+        self.message_user(request, f"{queryset.count()} message(s) marked as read.")
+    mark_as_read.short_description = "Mark selected as read"
+
+    def mark_as_unread(self, request, queryset):
+        queryset.update(is_read=False)
+        self.message_user(request, f"{queryset.count()} message(s) marked as unread.")
+    mark_as_unread.short_description = "Mark selected as unread"
 
 
 # ============================================

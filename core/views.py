@@ -5,16 +5,17 @@ from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
 from .models import (
-    NewsletterSubscriber, 
-    Experience, 
-    NowItem, 
+    NewsletterSubscriber,
+    Experience,
+    NowItem,
     Skill,
     Article,
     GalleryItem,
     RecentActivity,
-    Resume
+    Resume,
+    ContactMessage
 )
-from .forms import NewsletterForm
+from .forms import NewsletterForm, ContactForm
 
 
 def home(request):
@@ -218,7 +219,7 @@ def newsletter_subscribe(request):
     if form.is_valid():
         email = form.cleaned_data['email']
         subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)
-        
+
         if created:
             messages.success(request, 'Successfully subscribed to the newsletter!')
         else:
@@ -230,5 +231,18 @@ def newsletter_subscribe(request):
                 messages.success(request, 'Welcome back! You\'re subscribed again.')
     else:
         messages.error(request, 'Please enter a valid email address.')
-    
+
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+
+@require_http_methods(["POST"])
+def contact_submit(request):
+    """Handle contact form submission"""
+    form = ContactForm(request.POST)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Thanks for reaching out! I\'ll get back to you soon.')
+    else:
+        messages.error(request, 'Please fill out all fields correctly.')
+
     return redirect(request.META.get('HTTP_REFERER', 'home'))

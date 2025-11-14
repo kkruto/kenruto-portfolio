@@ -148,9 +148,9 @@
                 Let's talk if you're building something weird, creative, or at the intersection of art and tech.
             </p>
             <div class="flex flex-wrap gap-2">
-                <a href="mailto:ken@kenruto.com" class="text-sm bg-accent hover:bg-accent-dark text-white px-4 py-1.5 rounded transition-colors">
-                    Email
-                </a>
+                <button @click="$dispatch('open-contact-modal')" class="text-sm bg-accent hover:bg-accent-dark text-white px-4 py-1.5 rounded transition-colors">
+                    Get in Touch
+                </button>
                 <a href="https://twitter.com/kenruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
                     Twitter
                 </a>

@@ -177,12 +177,12 @@
             <p class="text-neutral-700 mb-6 max-w-xl mx-auto">
                 I'm interested in collaborating on projects that combine art, tech, or storytelling. Especially if they're a bit weird.
             </p>
-            <a
-                href="mailto:ken@kenruto.com"
+            <button
+                @click="$dispatch('open-contact-modal')"
                 class="btn btn-primary inline-block"
             >
                 Get in Touch
-            </a>
+            </button>
         </div>
 
     </div>

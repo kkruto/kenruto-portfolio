@@ -21,4 +21,5 @@ urlpatterns = [
     
     # Forms
     path('newsletter/subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
+    path('contact/submit/', views.contact_submit, name='contact_submit'),
 ]
