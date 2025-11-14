@@ -20,9 +20,9 @@
                 <a href="{% url 'about' %}" class="text-sm bg-accent hover:bg-accent-dark text-white px-5 py-2.5 rounded-lg transition-colors font-medium">
                     About & Resume
                 </a>
-                <a href="mailto:ken@kenruto.com" class="text-sm border-2 border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50 text-neutral-900 px-5 py-2.5 rounded-lg transition-colors font-medium">
+                <button @click="$dispatch('open-contact-modal')" class="text-sm border-2 border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50 text-neutral-900 px-5 py-2.5 rounded-lg transition-colors font-medium">
                     Get in Touch
-                </a>
+                </button>
             </div>
         </section>
 
