@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Ken Ruto - Product Manager & Engineer{% endblock %}
+{% block title %}Ken Ruto - Product Manager, Engineer, Storyteller{% endblock %}
 
 {% block content %}
 
@@ -9,14 +9,14 @@
     <div class="container-custom max-w-4xl">
 
         <!-- Hero Section -->
-        <section class="mb-16">
+        <section class="mb-16 text-center">
             <h1 class="text-3xl md:text-4xl font-medium text-neutral-900 mb-4 leading-tight">
                 Product Manager, Engineer, Storyteller
             </h1>
-            <p class="text-lg text-neutral-700 mb-6 max-w-2xl leading-relaxed">
-                I build products, write essays, and tell stories about the intersection of technology and creativity. Currently exploring how AI changes what it means to make things.
+            <p class="text-lg text-neutral-700 mb-6 max-w-2xl mx-auto leading-relaxed">
+                I work at the intersection of tech, design, art, storytelling, and AI. Currently based in Nairobi, exploring how technology changes what it means to create.
             </p>
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap justify-center gap-3">
                 <a href="{% url 'about' %}" class="text-sm bg-accent hover:bg-accent-dark text-white px-5 py-2.5 rounded-lg transition-colors font-medium">
                     About & Resume
                 </a>
@@ -51,7 +51,7 @@
             </div>
         </section>
         {% endif %}
-        
+
         <!-- Recent Writing -->
         {% if featured_articles or recent_articles %}
         <section class="mb-16">
@@ -92,7 +92,7 @@
             </div>
         </section>
         {% endif %}
-        
+
         <!-- Featured Projects -->
         {% if recent_projects %}
         <section class="mb-16">
@@ -130,44 +130,11 @@
         </section>
         {% endif %}
 
-        <!-- Experience -->
-        {% if recent_experiences %}
-        <section class="mb-16">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-medium text-neutral-900">Experience</h2>
-                <a href="{% url 'about' %}" class="text-sm text-accent hover:text-accent-dark font-medium">
-                    Full resume →
-                </a>
-            </div>
-
-            <div class="space-y-6">
-                {% for exp in recent_experiences %}
-                <div class="pb-6 {% if not forloop.last %}border-b border-neutral-200{% endif %}">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <h3 class="text-base font-medium text-neutral-900">
-                                {{ exp.title }}
-                            </h3>
-                            <p class="text-sm text-neutral-600">
-                                {{ exp.organization }}{% if exp.location %} • {{ exp.location }}{% endif %}
-                            </p>
-                        </div>
-                        <span class="text-xs text-neutral-500 whitespace-nowrap">
-                            {{ exp.start_date|date:"Y" }}-{% if exp.end_date %}{{ exp.end_date|date:"Y" }}{% else %}Present{% endif %}
-                        </span>
-                    </div>
-                    <p class="text-sm text-neutral-700 leading-relaxed">{{ exp.description|truncatewords:25 }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-        
         <!-- Newsletter CTA -->
         <section>
             {% include 'components/newsletter.html' %}
         </section>
-        
+
     </div>
 </div>
 
