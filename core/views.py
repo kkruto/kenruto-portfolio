@@ -112,9 +112,73 @@ def article_detail(request, slug):
 
 
 def small_bets(request):
-    """Projects/Small Bets page"""
-    # You can add Project model later, for now keeping simple
-    return render(request, 'small_bets.html')
+    """
+    Projects/Small Bets page
+
+    Displays technical projects from Experience model (type='project')
+    Supports filtering by category via tech_stack
+    """
+    # Get all projects
+    projects = Experience.objects.filter(
+        type='project'
+    ).order_by('-start_date')
+
+    # Optional: Filter by category (based on tech_stack)
+    category = request.GET.get('category')
+    if category and category != 'all':
+        # Filter projects that have the category in their tech_stack
+        projects = [p for p in projects if category.lower() in [tech.lower() for tech in p.tech_stack]]
+
+    # Calculate stats
+    total_projects = Experience.objects.filter(type='project').count()
+    active_projects = Experience.objects.filter(
+        type='project',
+        end_date__isnull=True  # Projects with no end date are current
+    ).count()
+
+    context = {
+        'projects': projects,
+        'total_projects': total_projects,
+        'active_projects': active_projects,
+        'selected_category': category or 'all',
+    }
+    return render(request, 'small_bets.html', context)
+
+
+def project_detail(request, pk):
+    """
+    Project detail page
+
+    Shows detailed information about a specific project
+    """
+    project = get_object_or_404(Experience, pk=pk, type='project')
+
+    # Get related projects (same tech stack or similar)
+    related_projects = Experience.objects.filter(
+        type='project'
+    ).exclude(pk=pk)
+
+    # Try to find projects with overlapping tech stack
+    if project.tech_stack:
+        related_by_tech = []
+        for proj in related_projects:
+            if proj.tech_stack:
+                # Count how many technologies overlap
+                overlap = len(set(project.tech_stack) & set(proj.tech_stack))
+                if overlap > 0:
+                    related_by_tech.append((proj, overlap))
+
+        # Sort by overlap count and take top 3
+        related_by_tech.sort(key=lambda x: x[1], reverse=True)
+        related_projects = [proj for proj, _ in related_by_tech[:3]]
+    else:
+        related_projects = related_projects[:3]
+
+    context = {
+        'project': project,
+        'related_projects': related_projects,
+    }
+    return render(request, 'project_detail.html', context)
 
 
 def tlw_studio(request):

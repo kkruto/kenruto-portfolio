@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_extras %}
 
 {% block title %}{{ article.title }} - Ken Ruto{% endblock %}
+
+{% block extra_head %}
+    <!-- Chart.js for data visualizations (only load if article has interactive content) -->
+    {% if article.has_interactive_content %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    {% endif %}
+
+    <!-- Article-specific custom CSS -->
+    {% if article.custom_css %}
+    <style>
+        {{ article.custom_css|safe }}
+    </style>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 
@@ -67,15 +82,8 @@
         
         <!-- Article Content -->
         <div class="prose-custom max-w-none">
-            <!-- 
-                CONTENT AREA
-                ============
-                This is where your essay content goes.
-                Use Django template variable or editor content.
-            -->
-            
             {% if article.content %}
-                {{ article.content|safe }}
+                {{ article.content|markdown }}
             {% else %}
                 <!-- Example article content -->
                 <p class="text-lg text-neutral-700 leading-relaxed mb-6">
@@ -230,4 +238,13 @@
     </div>
 </article>
 
+{% endblock %}
+
+{% block extra_scripts %}
+    <!-- Article-specific custom JavaScript -->
+    {% if article.custom_javascript %}
+    <script>
+        {{ article.custom_javascript|safe }}
+    </script>
+    {% endif %}
 {% endblock %}

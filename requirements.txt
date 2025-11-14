@@ -1,0 +1,24 @@
+# Core Framework
+Django==5.2.7
+
+# Static Files & Production
+whitenoise==6.8.2
+
+# Image Processing
+Pillow==11.0.0
+
+# Markdown Support
+markdown2==2.5.0
+
+# Environment Variables (for production)
+python-decouple==3.8
+
+# Production Server
+gunicorn==23.0.0
+
+# Database (for production PostgreSQL migration)
+psycopg2-binary==2.9.10
+
+# Django Storage (for S3/cloud storage in production)
+django-storages==1.14.4
+boto3==1.35.90

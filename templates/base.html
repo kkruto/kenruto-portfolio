@@ -47,23 +47,23 @@
     {% if messages %}
     <div class="fixed bottom-4 right-4 z-50 space-y-2">
         {% for message in messages %}
-        <!-- 
+        <!--
             ALPINE.JS: Using x-data to create a dismissible message component
             - x-data initializes the component with 'show: true'
             - x-show controls visibility
             - x-transition adds smooth fade in/out
             - @click toggles the 'show' variable
         -->
-        <div 
-            x-data="{ show: true }" 
-            x-show="show" 
+        <div
+            x-data="{ show: true }"
+            x-show="show"
             x-transition
             class="bg-white border-l-4 {% if message.tags == 'success' %}border-green-500{% elif message.tags == 'error' %}border-red-500{% else %}border-blue-500{% endif %} rounded-lg shadow-lg p-4 max-w-sm"
         >
             <div class="flex items-start justify-between">
                 <p class="text-sm text-neutral-700">{{ message }}</p>
-                <button 
-                    @click="show = false" 
+                <button
+                    @click="show = false"
                     class="ml-4 text-neutral-400 hover:text-neutral-600"
                     aria-label="Close message"
                 >
@@ -76,6 +76,9 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    <!-- Extra Scripts Block (for page-specific JavaScript) -->
+    {% block extra_scripts %}{% endblock %}
 
 </body>
 </html>

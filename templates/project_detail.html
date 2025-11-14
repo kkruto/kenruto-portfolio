@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+
+{% block title %}{{ project.title }} - Ken Ruto{% endblock %}
+
+{% block content %}
+
+<article class="page-transition pt-32 pb-20">
+    <div class="container-custom max-w-3xl">
+
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-neutral-500 mb-8">
+            <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
+            <span class="mx-2">></span>
+            <a href="{% url 'small_bets' %}" class="hover:text-neutral-700">Projects</a>
+            <span class="mx-2">></span>
+            <span class="text-neutral-900">{{ project.title }}</span>
+        </nav>
+
+        <!-- Project Header -->
+        <header class="mb-12">
+            <!-- Status Badge -->
+            <div class="mb-4">
+                {% if not project.end_date %}
+                <span class="inline-block bg-green-100 text-green-700 text-sm px-4 py-2 rounded-full font-medium">
+                    🚀 Active Project
+                </span>
+                {% else %}
+                <span class="inline-block bg-neutral-200 text-neutral-600 text-sm px-4 py-2 rounded-full font-medium">
+                    ✓ Completed
+                </span>
+                {% endif %}
+            </div>
+
+            <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-4 leading-tight">
+                {{ project.title }}
+            </h1>
+
+            {% if project.organization %}
+            <p class="text-lg text-neutral-600 mb-4">{{ project.organization }}</p>
+            {% endif %}
+
+            <!-- Meta Information -->
+            <div class="flex flex-wrap items-center gap-4 text-sm text-neutral-600">
+                <time>
+                    {{ project.start_date|date:"F Y" }}
+                    {% if project.end_date %} - {{ project.end_date|date:"F Y" }}{% else %} - Present{% endif %}
+                </time>
+                {% if project.location %}
+                <span>•</span>
+                <span>📍 {{ project.location }}</span>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Tech Stack -->
+        {% if project.tech_stack %}
+        <div class="mb-12">
+            <h2 class="text-sm font-medium text-neutral-500 uppercase tracking-wide mb-4">Tech Stack</h2>
+            <div class="flex flex-wrap gap-2">
+                {% for tech in project.tech_stack %}
+                <span class="bg-accent/10 text-accent-dark text-sm px-4 py-2 rounded-lg font-medium">
+                    {{ tech }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Project Description -->
+        <div class="prose-custom max-w-none mb-12">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-4">About This Project</h2>
+            {% if project.description %}
+                <div class="text-neutral-700 leading-relaxed">
+                    {{ project.description|markdown }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Key Achievements -->
+        {% if project.achievements %}
+        <div class="mb-12">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Key Achievements</h2>
+            <ul class="space-y-3">
+                {% for achievement in project.achievements %}
+                <li class="flex items-start gap-3">
+                    <span class="text-accent text-lg">✓</span>
+                    <span class="text-neutral-700">{{ achievement }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- External Link -->
+        {% if project.link %}
+        <div class="mb-12">
+            <a
+                href="{{ project.link }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary inline-flex items-center gap-2"
+            >
+                Visit Project
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Related Projects -->
+        {% if related_projects %}
+        <section class="mt-16 pt-12 border-t border-neutral-200">
+            <h2 class="text-2xl font-medium text-neutral-900 mb-8">Related Projects</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                {% for related in related_projects %}
+                <article class="card">
+                    <div class="mb-3">
+                        {% if not related.end_date %}
+                        <span class="inline-block bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+                            Active
+                        </span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'project_detail' related.pk %}" class="no-underline">
+                        <h3 class="text-lg font-medium text-neutral-900 mb-2 hover:text-accent transition-colors">
+                            {{ related.title }}
+                        </h3>
+                        <p class="text-sm text-neutral-600 mb-3">
+                            {{ related.description|truncatewords:20 }}
+                        </p>
+                        {% if related.tech_stack %}
+                        <div class="flex flex-wrap gap-1">
+                            {% for tech in related.tech_stack|slice:":3" %}
+                            <span class="bg-neutral-100 text-neutral-600 text-xs px-2 py-1 rounded">
+                                {{ tech }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Back to Projects -->
+        <div class="mt-12 text-center">
+            <a href="{% url 'small_bets' %}" class="text-neutral-600 hover:text-neutral-900 text-sm">
+                ← Back to all projects
+            </a>
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="mt-16 bg-neutral-100 rounded-2xl p-8 text-center">
+            <h2 class="text-xl font-medium text-neutral-900 mb-3">
+                Interested in collaborating?
+            </h2>
+            <p class="text-neutral-700 mb-6 max-w-xl mx-auto">
+                Let's discuss how we can work together on your next project.
+            </p>
+            <a href="mailto:kenruto@example.com" class="btn btn-primary inline-block">
+                Get in Touch
+            </a>
+        </div>
+
+    </div>
+</article>
+
+{% endblock %}

@@ -13,6 +13,7 @@ urlpatterns = [
     path('essays/', views.kiota, name='kiota'),
     path('essays/<slug:slug>/', views.article_detail, name='article_detail'),
     path('projects/', views.small_bets, name='small_bets'),
+    path('projects/<int:pk>/', views.project_detail, name='project_detail'),
     path('gallery/', views.gallery, name='gallery'),
     
     # Optional/Other pages
