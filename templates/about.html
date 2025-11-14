@@ -5,76 +5,87 @@
 
 {% block content %}
 
-<div class="page-transition pt-32 pb-20">
-    <div class="container-custom max-w-3xl">
+<div class="page-transition pt-24 pb-16">
+    <div class="container-custom max-w-4xl">
 
-        <!-- Breadcrumb -->
-        <nav class="text-sm text-neutral-500 mb-8">
-            <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
-            <span class="mx-2">></span>
-            <span class="text-neutral-900">About</span>
-        </nav>
+        <!-- Profile Header -->
+        <section class="mb-10">
+            <div class="flex items-start gap-6">
+                <!-- Profile Picture -->
+                <div class="flex-shrink-0">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center text-white text-3xl font-medium">
+                        KR
+                    </div>
+                </div>
 
-        <!-- Page Title -->
-        <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-12">
-            About
-        </h1>
-
-        <!-- Personal Intro -->
-        <section class="prose-custom mb-12">
-            <p class="text-lg leading-relaxed mb-4">
-                Hi, I'm Ken. I'm a product manager and engineer originally from Nairobi, Kenya and now in San Francisco.
-            </p>
-            <p class="leading-relaxed">
-                I build products that help people create, learn, and connect. My background spans product management, engineering, and design. I write about this process, document my experiments, and share what I learn along the way.
-            </p>
+                <!-- Header Info -->
+                <div class="flex-1">
+                    <h1 class="text-3xl font-medium text-neutral-900 mb-2">
+                        Ken Ruto
+                    </h1>
+                    <p class="text-base text-neutral-600 mb-3">
+                        Product Manager & Engineer
+                    </p>
+                    <p class="text-sm text-neutral-700 max-w-2xl">
+                        Building products that help people create, learn, and connect. Based in San Francisco, originally from Nairobi.
+                    </p>
+                </div>
+            </div>
         </section>
 
         <!-- Resume Download -->
         {% if resume and resume.resume_file %}
-        <section class="mb-12">
+        <section class="mb-8">
             <a
                 href="{{ resume.resume_file.url }}"
                 download
-                class="btn btn-primary inline-flex items-center gap-2"
+                class="inline-flex items-center gap-2 text-sm text-accent hover:text-accent-dark font-medium"
             >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                Download Resume
+                Download PDF Resume
             </a>
         </section>
         {% endif %}
 
         <!-- Experience -->
         {% if experiences %}
-        <section class="mb-12">
-            <h2 class="text-xl font-medium text-neutral-900 mb-6">Experience</h2>
+        <section class="mb-10">
+            <h2 class="text-lg font-medium text-neutral-900 mb-4">Experience</h2>
 
             <div class="space-y-6">
                 {% for exp in experiences %}
-                <div class="border-b border-neutral-200 pb-6 last:border-0">
+                <div class="{% if not forloop.last %}border-b border-neutral-200 pb-6{% endif %}">
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <h3 class="text-base font-medium text-neutral-900">{{ exp.title }}</h3>
-                            <p class="text-sm text-neutral-700">{{ exp.organization }}</p>
+                            <h3 class="text-sm font-medium text-neutral-900">{{ exp.title }}</h3>
+                            <p class="text-sm text-neutral-600">{{ exp.organization }}{% if exp.location %} • {{ exp.location }}{% endif %}</p>
                         </div>
-                        <div class="text-right text-xs text-neutral-500">
-                            <p>
-                                {{ exp.start_date|date:"M Y" }} -
-                                {% if exp.end_date %}
-                                    {{ exp.end_date|date:"M Y" }}
-                                {% else %}
-                                    Present
-                                {% endif %}
-                            </p>
+                        <div class="text-right text-xs text-neutral-500 whitespace-nowrap ml-4">
+                            {{ exp.start_date|date:"M Y" }} - {% if exp.end_date %}{{ exp.end_date|date:"M Y" }}{% else %}Present{% endif %}
                         </div>
                     </div>
 
+                    {% if exp.description %}
+                    <p class="text-sm text-neutral-700 mb-2">{{ exp.description }}</p>
+                    {% endif %}
+
+                    {% if exp.achievements %}
+                    <ul class="space-y-1 mb-3">
+                        {% for achievement in exp.achievements %}
+                        <li class="text-xs text-neutral-700 flex items-start gap-2">
+                            <span class="text-neutral-400 mt-1">•</span>
+                            <span>{{ achievement }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
                     {% if exp.tech_stack %}
-                    <div class="flex flex-wrap gap-2 mt-2">
+                    <div class="flex flex-wrap gap-1.5 mt-2">
                         {% for tech in exp.tech_stack %}
-                        <span class="bg-neutral-100 text-neutral-600 text-xs px-2 py-1 rounded">
+                        <span class="bg-neutral-100 text-neutral-600 text-xs px-2 py-0.5 rounded">
                             {{ tech }}
                         </span>
                         {% endfor %}
@@ -88,17 +99,24 @@
 
         <!-- Education -->
         {% if education %}
-        <section class="mb-12">
-            <h2 class="text-xl font-medium text-neutral-900 mb-6">Education</h2>
+        <section class="mb-10">
+            <h2 class="text-lg font-medium text-neutral-900 mb-4">Education</h2>
 
-            <div class="space-y-4">
+            <div class="space-y-3">
                 {% for edu in education %}
                 <div>
-                    <h3 class="text-base font-medium text-neutral-900">{{ edu.title }}</h3>
-                    <p class="text-sm text-neutral-700">{{ edu.organization }}</p>
-                    <p class="text-xs text-neutral-500">
-                        {{ edu.start_date|date:"Y" }} - {{ edu.end_date|date:"Y" }}
-                    </p>
+                    <div class="flex justify-between items-start mb-1">
+                        <div>
+                            <h3 class="text-sm font-medium text-neutral-900">{{ edu.title }}</h3>
+                            <p class="text-sm text-neutral-600">{{ edu.organization }}</p>
+                        </div>
+                        <div class="text-xs text-neutral-500 whitespace-nowrap ml-4">
+                            {{ edu.start_date|date:"Y" }} - {{ edu.end_date|date:"Y" }}
+                        </div>
+                    </div>
+                    {% if edu.description %}
+                    <p class="text-xs text-neutral-700">{{ edu.description }}</p>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>
@@ -107,15 +125,15 @@
 
         <!-- Skills -->
         {% if skills %}
-        <section class="mb-12">
-            <h2 class="text-xl font-medium text-neutral-900 mb-6">Skills</h2>
+        <section class="mb-10">
+            <h2 class="text-lg font-medium text-neutral-900 mb-4">Skills</h2>
 
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="grid md:grid-cols-2 gap-4">
                 {% regroup skills by category as skill_groups %}
                 {% for group in skill_groups %}
                 <div>
-                    <h3 class="text-sm font-medium text-neutral-900 mb-2">{{ group.grouper|title }}</h3>
-                    <p class="text-sm text-neutral-700">
+                    <h3 class="text-xs font-medium text-neutral-900 uppercase tracking-wide mb-1.5">{{ group.grouper|title }}</h3>
+                    <p class="text-xs text-neutral-700 leading-relaxed">
                         {% for skill in group.list %}{{ skill.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     </p>
                 </div>
@@ -125,19 +143,22 @@
         {% endif %}
 
         <!-- Connect -->
-        <section class="border-t border-neutral-200 pt-8">
-            <p class="text-neutral-700 mb-4">
+        <section class="border-t border-neutral-200 pt-6">
+            <p class="text-sm text-neutral-700 mb-3">
                 I'm always interested in meeting people building interesting things.
             </p>
-            <div class="flex flex-wrap gap-3">
-                <a href="mailto:hello@kenruto.com" class="btn btn-primary">
-                    Email me
+            <div class="flex flex-wrap gap-2">
+                <a href="mailto:hello@kenruto.com" class="text-sm bg-accent hover:bg-accent-dark text-white px-4 py-1.5 rounded transition-colors">
+                    Email
                 </a>
-                <a href="https://twitter.com/kenruto" target="_blank" class="btn btn-secondary">
+                <a href="https://twitter.com/kenruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
                     Twitter
                 </a>
-                <a href="https://github.com/kkruto" target="_blank" class="btn btn-secondary">
+                <a href="https://github.com/kkruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
                     GitHub
+                </a>
+                <a href="https://linkedin.com/in/kennyruto" target="_blank" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
+                    LinkedIn
                 </a>
             </div>
         </section>
