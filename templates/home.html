@@ -5,55 +5,55 @@
 
 {% block content %}
 
-<div class="page-transition pt-32 pb-20">
-    <div class="container-custom">
-        
+<div class="page-transition pt-24 pb-16">
+    <div class="container-custom max-w-4xl">
+
         <!-- Hero Section -->
-        <section class="mb-20">
-            <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-6">
-                Ken Ruto
+        <section class="mb-12">
+            <h1 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-3">
+                Product Manager & Engineer
             </h1>
             <div class="prose-custom max-w-2xl">
-                <p class="text-xl text-neutral-700 mb-4">
-                    Product manager, engineer, and writer building at the intersection of technology and storytelling.
+                <p class="text-base text-neutral-700 mb-2">
+                    Building products at the intersection of technology and storytelling. Currently exploring how AI can amplify human creativity.
                 </p>
-                <p class="text-lg text-neutral-600">
-                    Currently exploring how AI can amplify human creativity. Previously built products at startups and designed systems that scale.
+                <p class="text-sm text-neutral-600">
+                    Previously built products at startups and designed systems that scale.
                 </p>
             </div>
         </section>
-        
+
         <!-- Navigation Links -->
-        <section class="mb-20">
-            <nav class="flex flex-wrap gap-4">
-                <a href="{% url 'about' %}" class="btn btn-primary">
-                    About Me
+        <section class="mb-12">
+            <nav class="flex flex-wrap gap-2">
+                <a href="{% url 'about' %}" class="text-sm bg-accent hover:bg-accent-dark text-white px-4 py-1.5 rounded transition-colors">
+                    About
                 </a>
-                <a href="{% url 'kiota' %}" class="btn btn-secondary">
-                    Read Essays
+                <a href="{% url 'kiota' %}" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
+                    Essays
                 </a>
-                <a href="{% url 'small_bets' %}" class="btn btn-secondary">
-                    View Projects
+                <a href="{% url 'small_bets' %}" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
+                    Projects
                 </a>
-                <a href="{% url 'gallery' %}" class="btn btn-secondary">
+                <a href="{% url 'gallery' %}" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
                     Gallery
                 </a>
             </nav>
         </section>
-        
+
         <!-- What I'm Doing Now -->
         {% if now_items %}
-        <section class="mb-20">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-6">What I'm Doing Now</h2>
-            <div class="prose-custom max-w-2xl space-y-6">
+        <section class="mb-12">
+            <h2 class="text-lg font-medium text-neutral-900 mb-4">What I'm Doing Now</h2>
+            <div class="prose-custom max-w-2xl space-y-4">
                 {% for item in now_items %}
-                <div class="flex gap-4 items-start">
-                    <span class="text-3xl flex-shrink-0">{{ item.icon }}</span>
+                <div class="flex gap-3 items-start">
+                    <span class="text-2xl flex-shrink-0">{{ item.icon }}</span>
                     <div class="flex-1">
-                        <h3 class="text-lg font-medium text-neutral-900 mb-2">{{ item.title }}</h3>
-                        <p class="text-neutral-600">{{ item.description }}</p>
+                        <h3 class="text-sm font-medium text-neutral-900 mb-1">{{ item.title }}</h3>
+                        <p class="text-sm text-neutral-600">{{ item.description }}</p>
                         {% if item.link %}
-                        <a href="{{ item.link }}" class="text-sm text-accent hover:text-accent-dark mt-2 inline-block">
+                        <a href="{{ item.link }}" class="text-xs text-accent hover:text-accent-dark mt-1 inline-block">
                             Learn more →
                         </a>
                         {% endif %}
@@ -64,91 +64,54 @@
         </section>
         {% endif %}
         
-        <!-- Recently -->
-        {% if recent_activities %}
-        <section class="mb-20">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Recently</h2>
-            <div class="space-y-4">
-                {% for activity in recent_activities %}
-                <article class="border-b border-neutral-200 pb-4">
-                    <div class="flex items-baseline justify-between gap-4 mb-2">
-                        <div class="flex-1">
-                            <span class="text-xs text-neutral-500 uppercase tracking-wide">
-                                {{ activity.get_activity_type_display }}
-                            </span>
-                            <h3 class="text-lg font-medium text-neutral-900 mt-1">
-                                {% if activity.link %}
-                                <a href="{{ activity.link }}" class="hover:text-accent transition-colors">
-                                    {{ activity.title }}
-                                </a>
-                                {% else %}
-                                {{ activity.title }}
-                                {% endif %}
-                            </h3>
-                        </div>
-                        <time class="text-sm text-neutral-500 whitespace-nowrap">
-                            {{ activity.date|date:"M d, Y" }}
-                        </time>
-                    </div>
-                    <p class="text-neutral-600 text-sm">{{ activity.description }}</p>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-        
         <!-- Featured/Recent Articles -->
         {% if featured_articles or recent_articles %}
-        <section class="mb-20">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-medium text-neutral-900">Recent Writing</h2>
-                <a href="{% url 'kiota' %}" class="text-sm text-accent hover:text-accent-dark">
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-medium text-neutral-900">Recent Writing</h2>
+                <a href="{% url 'kiota' %}" class="text-xs text-accent hover:text-accent-dark">
                     View all →
                 </a>
             </div>
-            
-            <div class="space-y-6">
+
+            <div class="space-y-4">
                 <!-- Show featured articles first -->
                 {% for article in featured_articles %}
-                <article class="border-b border-neutral-200 pb-6 hover:border-neutral-300 transition-colors group">
+                <article class="border-b border-neutral-200 pb-4 hover:border-neutral-300 transition-colors group">
                     <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
-                        <div class="flex items-start gap-4 mb-2">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="bg-accent text-white text-xs px-2 py-1 rounded">Featured</span>
-                                    {% if article.article_type != 'essay' %}
-                                    <span class="bg-neutral-200 text-neutral-700 text-xs px-2 py-1 rounded">
-                                        {{ article.get_article_type_display }}
-                                    </span>
-                                    {% endif %}
-                                </div>
-                                <h3 class="text-lg font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                                    {{ article.title }}
-                                </h3>
-                            </div>
-                            <time class="text-sm text-neutral-500 whitespace-nowrap">
+                        <div class="flex items-baseline justify-between gap-4 mb-1">
+                            <h3 class="text-sm font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                                {{ article.title }}
+                            </h3>
+                            <time class="text-xs text-neutral-500 whitespace-nowrap">
                                 {{ article.published_date|date:"M d, Y" }}
                             </time>
                         </div>
-                        <p class="text-neutral-600 text-sm">{{ article.excerpt }}</p>
+                        <p class="text-xs text-neutral-600">{{ article.excerpt|truncatewords:25 }}</p>
+                        {% if article.read_time %}
+                        <span class="text-xs text-neutral-500 mt-1 inline-block">{{ article.read_time }} min read</span>
+                        {% endif %}
                     </a>
                 </article>
                 {% endfor %}
-                
+
                 <!-- Then show recent articles -->
                 {% for article in recent_articles %}
                 {% if not article.is_featured %}
-                <article class="border-b border-neutral-200 pb-6 hover:border-neutral-300 transition-colors group">
+                <article class="border-b border-neutral-200 pb-4 hover:border-neutral-300 transition-colors group">
                     <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
-                        <div class="flex items-baseline justify-between gap-4 mb-2">
-                            <h3 class="text-lg font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                        <div class="flex items-baseline justify-between gap-4 mb-1">
+                            <h3 class="text-sm font-medium text-neutral-900 group-hover:text-accent transition-colors">
                                 {{ article.title }}
                             </h3>
-                            <time class="text-sm text-neutral-500 whitespace-nowrap">
+                            <time class="text-xs text-neutral-500 whitespace-nowrap">
                                 {{ article.published_date|date:"M d, Y" }}
                             </time>
                         </div>
-                        <p class="text-neutral-600 text-sm">{{ article.excerpt }}</p>
+                        <p class="text-xs text-neutral-600">{{ article.excerpt|truncatewords:25 }}</p>
+                        {% if article.read_time %}
+                        <span class="text-xs text-neutral-500 mt-1 inline-block">{{ article.read_time }} min read</span>
+                        {% endif %}
                     </a>
                 </article>
                 {% endif %}
