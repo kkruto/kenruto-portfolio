@@ -37,7 +37,7 @@
 
         <!-- About Me -->
         <section class="mb-12 bg-white rounded-xl border border-neutral-200 p-8">
-            <h2 class="text-xl font-medium text-neutral-900 mb-6">About Me</h2>
+            <h2 class="text-lg font-medium text-neutral-900 mb-6">About Me</h2>
             <div class="prose prose-neutral max-w-none">
                 <p class="text-neutral-700 leading-relaxed mb-4">
                     I work at the intersection of tech, design, art, storytelling, and AI. My background is in product management and engineering, but I'm equally interested in how stories are told through different mediums—whether that's software, essays, films, or data visualization.
@@ -53,17 +53,17 @@
 
         <!-- Resume Section with Collapsible Details -->
         <section class="mb-12">
-            <h2 class="text-xl font-medium text-neutral-900 mb-6">Resume</h2>
+            <h2 class="text-lg font-medium text-neutral-900 mb-6">Resume</h2>
 
             <!-- Experience Dropdown -->
             {% if experiences %}
             <div
-                x-data="{ open: true }"
+                x-data="{ open: false }"
                 class="bg-white rounded-xl border border-neutral-200 mb-4"
             >
                 <button
                     @click="open = !open"
-                    class="w-full flex items-center justify-between p-6 text-left hover:bg-neutral-50 transition-colors"
+                    class="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50 transition-colors"
                 >
                     <h3 class="text-lg font-medium text-neutral-900">Experience</h3>
                     <svg
@@ -129,12 +129,12 @@
             <!-- Education Dropdown -->
             {% if education %}
             <div
-                x-data="{ open: true }"
+                x-data="{ open: false }"
                 class="bg-white rounded-xl border border-neutral-200 mb-4"
             >
                 <button
                     @click="open = !open"
-                    class="w-full flex items-center justify-between p-6 text-left hover:bg-neutral-50 transition-colors"
+                    class="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50 transition-colors"
                 >
                     <h3 class="text-lg font-medium text-neutral-900">Education</h3>
                     <svg
@@ -178,12 +178,12 @@
             <!-- Skills Dropdown -->
             {% if skills %}
             <div
-                x-data="{ open: true }"
+                x-data="{ open: false }"
                 class="bg-white rounded-xl border border-neutral-200"
             >
                 <button
                     @click="open = !open"
-                    class="w-full flex items-center justify-between p-6 text-left hover:bg-neutral-50 transition-colors"
+                    class="w-full flex items-center justify-between p-5 text-left hover:bg-neutral-50 transition-colors"
                 >
                     <h3 class="text-lg font-medium text-neutral-900">Skills</h3>
                     <svg
