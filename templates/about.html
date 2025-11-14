@@ -5,210 +5,143 @@
 
 {% block content %}
 
-<!-- 
-    ABOUT PAGE - Minimal Design
-    ============================
-    
-    Structure inspired by Alisa Rae's about page:
-    - Personal intro
-    - "Previously" section (work experience)
-    - "Other" section (interests, hobbies)
-    - "Links about me" section
--->
-
 <div class="page-transition pt-32 pb-20">
     <div class="container-custom max-w-3xl">
-        
+
         <!-- Breadcrumb -->
         <nav class="text-sm text-neutral-500 mb-8">
             <a href="{% url 'home' %}" class="hover:text-neutral-700">Home</a>
             <span class="mx-2">></span>
             <span class="text-neutral-900">About</span>
         </nav>
-        
+
         <!-- Page Title -->
         <h1 class="text-4xl md:text-5xl font-medium text-neutral-900 mb-12">
             About
         </h1>
-        
+
         <!-- Personal Intro -->
-        <section class="prose-custom mb-16">
+        <section class="prose-custom mb-12">
             <p class="text-lg leading-relaxed mb-4">
-                Hi, I'm Ken. I'm {{ age|default:"27" }} years old, originally from Nairobi, Kenya and now in San Francisco, US.
-            </p>
-            <p class="leading-relaxed mb-4">
-                I build products that help people create, learn, and connect. My background spans product management, engineering, and design—which means I can speak to users, developers, and stakeholders in their own language.
+                Hi, I'm Ken. I'm a product manager and engineer originally from Nairobi, Kenya and now in San Francisco.
             </p>
             <p class="leading-relaxed">
-                I believe the best products emerge from deep curiosity about people's problems and rapid experimentation with solutions. I write about this process, document my experiments, and share what I learn along the way.
+                I build products that help people create, learn, and connect. My background spans product management, engineering, and design. I write about this process, document my experiments, and share what I learn along the way.
             </p>
         </section>
-        
-        <!-- Previously Section -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Previously</h2>
-            
+
+        <!-- Resume Download -->
+        {% if resume and resume.resume_file %}
+        <section class="mb-12">
+            <a
+                href="{{ resume.resume_file.url }}"
+                download
+                class="btn btn-primary inline-flex items-center gap-2"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Download Resume
+            </a>
+        </section>
+        {% endif %}
+
+        <!-- Experience -->
+        {% if experiences %}
+        <section class="mb-12">
+            <h2 class="text-xl font-medium text-neutral-900 mb-6">Experience</h2>
+
             <div class="space-y-6">
-                <!-- Experience 1 -->
-                <div class="prose-custom">
-                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
-                        Product Manager at TechCorp
-                    </h3>
-                    <p class="text-sm text-neutral-600 mb-3">2022 - Present • San Francisco</p>
-                    <ul class="space-y-2 text-neutral-700">
-                        <li>Led product strategy for AI-powered tools used by 100k+ creators</li>
-                        <li>Reduced user churn by 40% through improved onboarding and activation flows</li>
-                        <li>Shipped 15+ features from concept to production in cross-functional team</li>
-                    </ul>
+                {% for exp in experiences %}
+                <div class="border-b border-neutral-200 pb-6 last:border-0">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-base font-medium text-neutral-900">{{ exp.title }}</h3>
+                            <p class="text-sm text-neutral-700">{{ exp.organization }}</p>
+                        </div>
+                        <div class="text-right text-xs text-neutral-500">
+                            <p>
+                                {{ exp.start_date|date:"M Y" }} -
+                                {% if exp.end_date %}
+                                    {{ exp.end_date|date:"M Y" }}
+                                {% else %}
+                                    Present
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+
+                    {% if exp.tech_stack %}
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        {% for tech in exp.tech_stack %}
+                        <span class="bg-neutral-100 text-neutral-600 text-xs px-2 py-1 rounded">
+                            {{ tech }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                 </div>
-                
-                <!-- Experience 2 -->
-                <div class="prose-custom">
-                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
-                        Founding Engineer at StartupXYZ
-                    </h3>
-                    <p class="text-sm text-neutral-600 mb-3">2020 - 2022 • Remote</p>
-                    <ul class="space-y-2 text-neutral-700">
-                        <li>Built MVP and scaled to $1M ARR as first technical hire</li>
-                        <li>Designed and implemented core platform architecture (Django, React, PostgreSQL)</li>
-                        <li>Established engineering practices and hired team of 5 engineers</li>
-                    </ul>
-                </div>
-                
-                <!-- Experience 3 -->
-                <div class="prose-custom">
-                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
-                        Software Engineer at BigTech
-                    </h3>
-                    <p class="text-sm text-neutral-600 mb-3">2018 - 2020 • Seattle</p>
-                    <ul class="space-y-2 text-neutral-700">
-                        <li>Contributed to internal tools used by 10k+ employees</li>
-                        <li>Optimized query performance reducing latency by 60%</li>
-                        <li>Mentored junior engineers and led code reviews</li>
-                    </ul>
-                </div>
-                
-                <!-- Education -->
-                <div class="prose-custom">
-                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
-                        B.S. Computer Science
-                    </h3>
-                    <p class="text-sm text-neutral-600 mb-3">University of Nairobi • 2014 - 2018</p>
-                    <p class="text-neutral-700">
-                        Focused on machine learning, distributed systems, and human-computer interaction.
-                    </p>
-                </div>
+                {% endfor %}
             </div>
         </section>
-        
-        <!-- Other Section (Interests) -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Other</h2>
-            
-            <div class="prose-custom space-y-4">
+        {% endif %}
+
+        <!-- Education -->
+        {% if education %}
+        <section class="mb-12">
+            <h2 class="text-xl font-medium text-neutral-900 mb-6">Education</h2>
+
+            <div class="space-y-4">
+                {% for edu in education %}
                 <div>
-                    <strong class="text-neutral-900">Hobbies:</strong>
-                    <span class="text-neutral-700"> Running (training for my first marathon), reading (sci-fi and non-fiction), photography, and cooking (recommendations welcome!)</span>
+                    <h3 class="text-base font-medium text-neutral-900">{{ edu.title }}</h3>
+                    <p class="text-sm text-neutral-700">{{ edu.organization }}</p>
+                    <p class="text-xs text-neutral-500">
+                        {{ edu.start_date|date:"Y" }} - {{ edu.end_date|date:"Y" }}
+                    </p>
                 </div>
-                
-                <div>
-                    <strong class="text-neutral-900">Currently reading:</strong>
-                    <span class="text-neutral-700"> "The Creative Act" by Rick Rubin, "Working in Public" by Nadia Eghbal</span>
-                </div>
-                
-                <div>
-                    <strong class="text-neutral-900">Favorite tools:</strong>
-                    <span class="text-neutral-700"> VS Code, Linear, Notion, Figma, Claude</span>
-                </div>
-                
-                <div>
-                    <strong class="text-neutral-900">Coffee order:</strong>
-                    <span class="text-neutral-700"> Flat white, oat milk, no sugar</span>
-                </div>
+                {% endfor %}
             </div>
         </section>
-        
-        <!-- Links About Me -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-6">Links About Me</h2>
-            
-            <div class="prose-custom">
-                <ul class="space-y-3">
-                    <li>
-                        <a href="https://techcrunch.com/article" target="_blank" rel="noopener noreferrer">
-                            TechCrunch: Startup Raises $2M
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://medium.com/@kenruto" target="_blank" rel="noopener noreferrer">
-                            Medium: My Essays on Product & Technology
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://podcast.com/episode" target="_blank" rel="noopener noreferrer">
-                            Podcast: Building Products in Africa
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/kenruto" target="_blank" rel="noopener noreferrer">
-                            GitHub: Open Source Projects
-                        </a>
-                    </li>
-                </ul>
+        {% endif %}
+
+        <!-- Skills -->
+        {% if skills %}
+        <section class="mb-12">
+            <h2 class="text-xl font-medium text-neutral-900 mb-6">Skills</h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                {% regroup skills by category as skill_groups %}
+                {% for group in skill_groups %}
+                <div>
+                    <h3 class="text-sm font-medium text-neutral-900 mb-2">{{ group.grouper|title }}</h3>
+                    <p class="text-sm text-neutral-700">
+                        {% for skill in group.list %}{{ skill.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </p>
+                </div>
+                {% endfor %}
             </div>
         </section>
-        
-        <!-- Skills Section (Optional) -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-6">What I Work With</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-lg font-medium text-neutral-900 mb-3">Product & Design</h3>
-                    <p class="text-neutral-700 text-sm">
-                        User research, product strategy, roadmapping, wireframing, prototyping, analytics, A/B testing
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-medium text-neutral-900 mb-3">Engineering</h3>
-                    <p class="text-neutral-700 text-sm">
-                        Python, JavaScript, React, Django, PostgreSQL, AWS, Git, REST APIs, GraphQL
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-medium text-neutral-900 mb-3">AI & Data</h3>
-                    <p class="text-neutral-700 text-sm">
-                        Prompt engineering, LLM integration, data analysis, SQL, basic ML concepts
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-medium text-neutral-900 mb-3">Soft Skills</h3>
-                    <p class="text-neutral-700 text-sm">
-                        Technical writing, cross-functional leadership, stakeholder management, public speaking
-                    </p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- CTA -->
-        <section class="bg-neutral-100 rounded-2xl p-8 text-center">
-            <h2 class="text-2xl font-medium text-neutral-900 mb-4">Let's Connect</h2>
-            <p class="text-neutral-700 mb-6">
+        {% endif %}
+
+        <!-- Connect -->
+        <section class="border-t border-neutral-200 pt-8">
+            <p class="text-neutral-700 mb-4">
                 I'm always interested in meeting people building interesting things.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <div class="flex flex-wrap gap-3">
                 <a href="mailto:hello@kenruto.com" class="btn btn-primary">
-                    Send me an email
+                    Email me
                 </a>
                 <a href="https://twitter.com/kenruto" target="_blank" class="btn btn-secondary">
-                    Follow on Twitter
+                    Twitter
+                </a>
+                <a href="https://github.com/kkruto" target="_blank" class="btn btn-secondary">
+                    GitHub
                 </a>
             </div>
         </section>
-        
+
     </div>
 </div>
 

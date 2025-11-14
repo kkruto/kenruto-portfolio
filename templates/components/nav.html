@@ -52,22 +52,22 @@
             
             <!-- Desktop Navigation -->
             <div class="hidden md:flex items-center space-x-8">
-                <a 
-                    href="{% url 'home' %}" 
+                <a
+                    href="{% url 'home' %}"
                     class="nav-link"
                     :class="currentPath === '/' || currentPath === '/home/' ? 'active' : ''"
                 >
                     Home
                 </a>
-                <a 
-                    href="{% url 'about' %}" 
+                <a
+                    href="{% url 'about' %}"
                     class="nav-link"
                     :class="currentPath === '/about/' ? 'active' : ''"
                 >
                     About
                 </a>
-                <a 
-                    href="{% url 'kiota' %}" 
+                <a
+                    href="{% url 'kiota' %}"
                     class="nav-link"
                     :class="currentPath.includes('/kiota') ? 'active' : ''"
                 >
@@ -86,13 +86,6 @@
                     :class="currentPath.includes('/gallery') ? 'active' : ''"
                 >
                     Gallery
-                </a>
-                <a
-                    href="{% url 'resume' %}"
-                    class="nav-link"
-                    :class="currentPath.includes('/resume') ? 'active' : ''"
-                >
-                    Resume
                 </a>
             </div>
             
@@ -149,24 +142,24 @@
         class="md:hidden bg-white border-t border-neutral-200 shadow-lg"
     >
         <div class="container-custom py-4 space-y-2">
-            <a 
-                href="{% url 'home' %}" 
+            <a
+                href="{% url 'home' %}"
                 class="block px-4 py-3 rounded-lg nav-link"
                 :class="currentPath === '/' || currentPath === '/home/' ? 'bg-neutral-100 active' : ''"
                 @click="mobileMenuOpen = false"
             >
                 Home
             </a>
-            <a 
-                href="{% url 'about' %}" 
+            <a
+                href="{% url 'about' %}"
                 class="block px-4 py-3 rounded-lg nav-link"
                 :class="currentPath === '/about/' ? 'bg-neutral-100 active' : ''"
                 @click="mobileMenuOpen = false"
             >
                 About
             </a>
-            <a 
-                href="{% url 'kiota' %}" 
+            <a
+                href="{% url 'kiota' %}"
                 class="block px-4 py-3 rounded-lg nav-link"
                 :class="currentPath.includes('/kiota') ? 'bg-neutral-100 active' : ''"
                 @click="mobileMenuOpen = false"
@@ -188,14 +181,6 @@
                 @click="mobileMenuOpen = false"
             >
                 Gallery
-            </a>
-            <a
-                href="{% url 'resume' %}"
-                class="block px-4 py-3 rounded-lg nav-link"
-                :class="currentPath.includes('/resume') ? 'bg-neutral-100 active' : ''"
-                @click="mobileMenuOpen = false"
-            >
-                Resume
             </a>
         </div>
     </div>
