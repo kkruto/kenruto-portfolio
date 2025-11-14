@@ -5,147 +5,158 @@
 
 {% block content %}
 
-<div class="page-transition pt-24 pb-16">
+<div class="page-transition pt-20 pb-16">
     <div class="container-custom max-w-4xl">
 
         <!-- Hero Section -->
-        <section class="mb-12">
-            <h1 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-3">
+        <section class="mb-16">
+            <h1 class="text-3xl md:text-4xl font-medium text-neutral-900 mb-4 leading-tight">
                 Product Manager & Engineer
             </h1>
-            <div class="prose-custom max-w-2xl">
-                <p class="text-base text-neutral-700 mb-2">
-                    Building products at the intersection of technology and storytelling. Currently exploring how AI can amplify human creativity.
-                </p>
-                <p class="text-sm text-neutral-600">
-                    Previously built products at startups and designed systems that scale.
-                </p>
+            <p class="text-lg text-neutral-700 mb-6 max-w-2xl leading-relaxed">
+                Building products at the intersection of technology and storytelling. Currently exploring how AI can amplify human creativity.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <a href="{% url 'about' %}" class="text-sm bg-accent hover:bg-accent-dark text-white px-5 py-2.5 rounded-lg transition-colors font-medium">
+                    About & Resume
+                </a>
+                <a href="mailto:hello@kenruto.com" class="text-sm border-2 border-neutral-300 hover:border-neutral-400 hover:bg-neutral-50 text-neutral-900 px-5 py-2.5 rounded-lg transition-colors font-medium">
+                    Get in Touch
+                </a>
             </div>
-        </section>
-
-        <!-- Navigation Links -->
-        <section class="mb-12">
-            <nav class="flex flex-wrap gap-2">
-                <a href="{% url 'about' %}" class="text-sm bg-accent hover:bg-accent-dark text-white px-4 py-1.5 rounded transition-colors">
-                    About
-                </a>
-                <a href="{% url 'kiota' %}" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
-                    Essays
-                </a>
-                <a href="{% url 'small_bets' %}" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
-                    Projects
-                </a>
-                <a href="{% url 'gallery' %}" class="text-sm bg-neutral-200 hover:bg-neutral-300 text-neutral-900 px-4 py-1.5 rounded transition-colors">
-                    Gallery
-                </a>
-            </nav>
         </section>
 
         <!-- What I'm Doing Now -->
         {% if now_items %}
-        <section class="mb-12">
-            <h2 class="text-lg font-medium text-neutral-900 mb-4">What I'm Doing Now</h2>
-            <div class="prose-custom max-w-2xl space-y-4">
+        <section class="mb-16 bg-white rounded-xl border border-neutral-200 p-6">
+            <h2 class="text-xl font-medium text-neutral-900 mb-6">Currently</h2>
+            <div class="space-y-5">
                 {% for item in now_items %}
-                <div class="flex gap-3 items-start">
-                    <span class="text-2xl flex-shrink-0">{{ item.icon }}</span>
+                <div class="flex gap-4 items-start">
+                    <span class="text-3xl flex-shrink-0">{{ item.icon }}</span>
                     <div class="flex-1">
-                        <h3 class="text-sm font-medium text-neutral-900 mb-1">{{ item.title }}</h3>
-                        <p class="text-sm text-neutral-600">{{ item.description }}</p>
+                        <h3 class="text-base font-medium text-neutral-900 mb-2">{{ item.title }}</h3>
+                        <p class="text-sm text-neutral-600 leading-relaxed">{{ item.description }}</p>
                         {% if item.link %}
-                        <a href="{{ item.link }}" class="text-xs text-accent hover:text-accent-dark mt-1 inline-block">
+                        <a href="{{ item.link }}" class="text-sm text-accent hover:text-accent-dark mt-2 inline-block font-medium">
                             Learn more →
                         </a>
                         {% endif %}
                     </div>
                 </div>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-        
-        <!-- Featured/Recent Articles -->
-        {% if featured_articles or recent_articles %}
-        <section class="mb-12">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-lg font-medium text-neutral-900">Recent Writing</h2>
-                <a href="{% url 'kiota' %}" class="text-xs text-accent hover:text-accent-dark">
-                    View all →
-                </a>
-            </div>
-
-            <div class="space-y-4">
-                <!-- Show featured articles first -->
-                {% for article in featured_articles %}
-                <article class="border-b border-neutral-200 pb-4 hover:border-neutral-300 transition-colors group">
-                    <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
-                        <div class="flex items-baseline justify-between gap-4 mb-1">
-                            <h3 class="text-sm font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                                {{ article.title }}
-                            </h3>
-                            <time class="text-xs text-neutral-500 whitespace-nowrap">
-                                {{ article.published_date|date:"M d, Y" }}
-                            </time>
-                        </div>
-                        <p class="text-xs text-neutral-600">{{ article.excerpt|truncatewords:25 }}</p>
-                        {% if article.read_time %}
-                        <span class="text-xs text-neutral-500 mt-1 inline-block">{{ article.read_time }} min read</span>
-                        {% endif %}
-                    </a>
-                </article>
-                {% endfor %}
-
-                <!-- Then show recent articles -->
-                {% for article in recent_articles %}
-                {% if not article.is_featured %}
-                <article class="border-b border-neutral-200 pb-4 hover:border-neutral-300 transition-colors group">
-                    <a href="{% url 'article_detail' article.slug %}" class="block no-underline">
-                        <div class="flex items-baseline justify-between gap-4 mb-1">
-                            <h3 class="text-sm font-medium text-neutral-900 group-hover:text-accent transition-colors">
-                                {{ article.title }}
-                            </h3>
-                            <time class="text-xs text-neutral-500 whitespace-nowrap">
-                                {{ article.published_date|date:"M d, Y" }}
-                            </time>
-                        </div>
-                        <p class="text-xs text-neutral-600">{{ article.excerpt|truncatewords:25 }}</p>
-                        {% if article.read_time %}
-                        <span class="text-xs text-neutral-500 mt-1 inline-block">{{ article.read_time }} min read</span>
-                        {% endif %}
-                    </a>
-                </article>
+                {% if not forloop.last %}
+                <div class="border-b border-neutral-100"></div>
                 {% endif %}
                 {% endfor %}
             </div>
         </section>
         {% endif %}
         
-        <!-- Previously (Work Experience) -->
+        <!-- Recent Writing -->
+        {% if featured_articles or recent_articles %}
+        <section class="mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-medium text-neutral-900">Recent Writing</h2>
+                <a href="{% url 'kiota' %}" class="text-sm text-accent hover:text-accent-dark font-medium">
+                    View all essays →
+                </a>
+            </div>
+
+            <div class="grid gap-4">
+                <!-- Show all articles -->
+                {% for article in recent_articles %}
+                <article class="bg-white rounded-lg border border-neutral-200 p-5 hover:border-neutral-300 hover:shadow-sm transition-all group">
+                    <a href="{% url 'article_detail' article.slug %}" class="block">
+                        <div class="flex items-start justify-between gap-4 mb-2">
+                            <div class="flex-1">
+                                <h3 class="text-base font-medium text-neutral-900 group-hover:text-accent transition-colors mb-2">
+                                    {{ article.title }}
+                                </h3>
+                                <p class="text-sm text-neutral-600 leading-relaxed">{{ article.excerpt|truncatewords:30 }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 mt-3 text-xs text-neutral-500">
+                            <time>{{ article.published_date|date:"M d, Y" }}</time>
+                            {% if article.read_time %}
+                            <span>•</span>
+                            <span>{{ article.read_time }} min read</span>
+                            {% endif %}
+                            {% if article.article_type != 'essay' %}
+                            <span>•</span>
+                            <span class="bg-neutral-100 text-neutral-700 px-2 py-0.5 rounded">{{ article.get_article_type_display }}</span>
+                            {% endif %}
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+        
+        <!-- Featured Projects -->
+        {% if recent_projects %}
+        <section class="mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-medium text-neutral-900">Featured Projects</h2>
+                <a href="{% url 'small_bets' %}" class="text-sm text-accent hover:text-accent-dark font-medium">
+                    View all projects →
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                {% for project in recent_projects %}
+                <article class="bg-white rounded-lg border border-neutral-200 p-5 hover:border-neutral-300 hover:shadow-sm transition-all group">
+                    <a href="{% url 'project_detail' project.pk %}" class="block">
+                        <div class="flex items-start justify-between mb-3">
+                            <h3 class="text-base font-medium text-neutral-900 group-hover:text-accent transition-colors">
+                                {{ project.title }}
+                            </h3>
+                            {% if not project.end_date %}
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full whitespace-nowrap">Active</span>
+                            {% endif %}
+                        </div>
+                        <p class="text-sm text-neutral-600 mb-3 leading-relaxed">{{ project.description|truncatewords:20 }}</p>
+                        {% if project.tech_stack %}
+                        <div class="flex flex-wrap gap-1.5">
+                            {% for tech in project.tech_stack|slice:":4" %}
+                            <span class="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Experience -->
         {% if recent_experiences %}
-        <section class="mb-20">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-medium text-neutral-900">Previously</h2>
-                <a href="{% url 'about' %}" class="text-sm text-accent hover:text-accent-dark">
+        <section class="mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-medium text-neutral-900">Experience</h2>
+                <a href="{% url 'about' %}" class="text-sm text-accent hover:text-accent-dark font-medium">
                     Full resume →
                 </a>
             </div>
-            
+
             <div class="space-y-6">
                 {% for exp in recent_experiences %}
-                <div class="prose-custom">
-                    <h3 class="text-lg font-medium text-neutral-900 mb-2">
-                        {{ exp.title }} at {{ exp.organization }}
-                    </h3>
-                    <p class="text-sm text-neutral-600 mb-3">
-                        {{ exp.start_date|date:"Y" }} - 
-                        {% if exp.is_current %}
-                            Present
-                        {% elif exp.end_date %}
-                            {{ exp.end_date|date:"Y" }}
-                        {% endif %}
-                        {% if exp.location %} • {{ exp.location }}{% endif %}
-                    </p>
-                    <p class="text-neutral-700">{{ exp.description|truncatewords:30 }}</p>
+                <div class="pb-6 {% if not forloop.last %}border-b border-neutral-200{% endif %}">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="text-base font-medium text-neutral-900">
+                                {{ exp.title }}
+                            </h3>
+                            <p class="text-sm text-neutral-600">
+                                {{ exp.organization }}{% if exp.location %} • {{ exp.location }}{% endif %}
+                            </p>
+                        </div>
+                        <span class="text-xs text-neutral-500 whitespace-nowrap">
+                            {{ exp.start_date|date:"Y" }}-{% if exp.end_date %}{{ exp.end_date|date:"Y" }}{% else %}Present{% endif %}
+                        </span>
+                    </div>
+                    <p class="text-sm text-neutral-700 leading-relaxed">{{ exp.description|truncatewords:25 }}</p>
                 </div>
                 {% endfor %}
             </div>
